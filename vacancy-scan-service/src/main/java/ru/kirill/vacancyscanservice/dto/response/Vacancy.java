@@ -1,12 +1,11 @@
 package ru.kirill.vacancyscanservice.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -14,8 +13,7 @@ import java.time.LocalDateTime;
 public class Vacancy extends BaseResponse {
 
     private String url;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-    private LocalDateTime publishedAt;
+    private Timestamp publishedAt;
     private Experience experience;
     private Employer employer;
     private Employment employment;
