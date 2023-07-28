@@ -1,3 +1,6 @@
 spring:
   application:
     name: vacancy-scan-service
+
+search:
+  url: https://api.hh.ru/vacancies
