@@ -1,3 +1,4 @@
 rootProject.name = 'job-scanner'
 
 include 'job-server'
+include 'vacancy-scan-service'
