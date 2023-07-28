@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
 import ru.kirill.vacancyscanservice.annotation.Client;
 import ru.kirill.vacancyscanservice.config.SearchProperties;
-import ru.kirill.vacancyscanservice.model.SearchQuery;
+import ru.kirill.vacancyscanservice.dto.request.SearchQuery;
+import ru.kirill.vacancyscanservice.dto.response.VacancyPage;
 import ru.kirill.vacancyscanservice.util.QueryUtil;
 
 @Client
@@ -14,9 +15,10 @@ public class SearchClient {
     private final RestTemplate restTemplate;
     private final SearchProperties searchProperties;
 
-    public void searchVacancies(SearchQuery query) {
+    public VacancyPage searchVacancies(SearchQuery query) {
         String url = QueryUtil.createUrlWithParameters(searchProperties.url(), query);
-        String result = restTemplate.getForObject(url, String.class);
-        System.out.println(result);
+        return restTemplate
+                .getForEntity(url, VacancyPage.class)
+                .getBody();
     }
 }

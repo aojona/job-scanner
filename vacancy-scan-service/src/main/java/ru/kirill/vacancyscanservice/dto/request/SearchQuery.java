@@ -1,4 +1,4 @@
-package ru.kirill.vacancyscanservice.model;
+package ru.kirill.vacancyscanservice.dto.request;
 
 import lombok.Data;
 
