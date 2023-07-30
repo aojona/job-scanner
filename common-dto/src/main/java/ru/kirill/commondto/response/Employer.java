@@ -1,4 +1,4 @@
-package ru.kirill.vacancyscanservice.dto.response;
+package ru.kirill.commondto.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

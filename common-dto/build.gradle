@@ -1,0 +1,10 @@
+plugins {
+    id 'java'
+    id 'io.freefair.lombok' version '8.0.0-rc2'
+}
+
+version = '0.0.1-SNAPSHOT'
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+}

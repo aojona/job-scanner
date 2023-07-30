@@ -1,4 +1,4 @@
-package ru.kirill.vacancyscanservice.dto.response;
+package ru.kirill.commondto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

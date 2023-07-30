@@ -2,10 +2,10 @@ package ru.kirill.vacancyscanservice.client;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestTemplate;
+import ru.kirill.commondto.request.SearchQuery;
+import ru.kirill.commondto.response.VacancyPage;
 import ru.kirill.vacancyscanservice.annotation.Client;
 import ru.kirill.vacancyscanservice.config.SearchProperties;
-import ru.kirill.vacancyscanservice.dto.request.SearchQuery;
-import ru.kirill.vacancyscanservice.dto.response.VacancyPage;
 import ru.kirill.vacancyscanservice.util.QueryUtil;
 
 @Client
