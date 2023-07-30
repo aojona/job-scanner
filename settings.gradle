@@ -4,4 +4,4 @@ include 'job-server'
 include 'vacancy-scan-service'
 include 'gateway-service'
 include 'common-dto'
-
+include 'scheduler-service'
