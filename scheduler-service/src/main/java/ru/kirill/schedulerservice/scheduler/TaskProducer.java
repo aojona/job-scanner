@@ -3,12 +3,11 @@ package ru.kirill.schedulerservice.scheduler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import ru.kirill.commondto.request.SearchMessage;
-
+import ru.kirill.schedulerservice.annotation.Scheduler;
 import java.util.concurrent.TimeUnit;
 
-@Component
+@Scheduler
 @RequiredArgsConstructor
 public class TaskProducer {
 
@@ -23,7 +22,7 @@ public class TaskProducer {
     private static SearchMessage buildHelloWorldMessage() {
         return SearchMessage
                 .builder()
-                .text("Hello World")
+                .text("java")
                 .page(10)
                 .perPage(15)
                 .build();

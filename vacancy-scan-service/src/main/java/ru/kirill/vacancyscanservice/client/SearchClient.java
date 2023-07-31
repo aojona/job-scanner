@@ -15,8 +15,8 @@ public class SearchClient {
     private final RestTemplate restTemplate;
     private final SearchProperties searchProperties;
 
-    public VacancyPage searchVacancies(SearchMessage query) {
-        String url = QueryUtil.createUrlWithParameters(searchProperties.url(), query);
+    public VacancyPage searchVacancies(SearchMessage searchMessage) {
+        String url = QueryUtil.createUrlWithParameters(searchProperties.url(), searchMessage);
         return restTemplate
                 .getForEntity(url, VacancyPage.class)
                 .getBody();

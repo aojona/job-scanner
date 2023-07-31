@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: vacancy-scan-service
+  rabbitmq:
+    username: user
+    password: pass
+
+rabbitmq:
+  scheduled-task-queue: scheduled-tasks-queue
 
 search:
   url: https://api.hh.ru/vacancies
