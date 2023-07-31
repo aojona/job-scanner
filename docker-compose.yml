@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  rabbit:
+    container_name: aojona-rabbitmq
+    image: rabbitmq:3.12-management
+    volumes:
+      - ./conf/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./conf/rabbit-definitions.json:/etc/rabbitmq/rabbit-definitions.json:ro
+    ports:
+      - "5672:5672"
+      - "15672:15672"
