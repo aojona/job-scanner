@@ -13,9 +13,9 @@ public class VacancyPage {
 
     @JsonProperty("items")
     List<Vacancy> vacancies;
-    Integer found;
-    Integer pages;
-    Integer perPage;
-    Integer page;
+    int found;
+    int pages;
+    int perPage;
+    int page;
 }
 
