@@ -4,3 +4,14 @@ server:
 spring:
   application:
     name: scheduler-service
+  rabbitmq:
+    username: user
+    password: pass
+
+rabbitmq:
+  exchange:
+    name: job-scanner-exchange
+    routing-key: scheduled-key
+
+scheduler:
+  fixed-rate: 10

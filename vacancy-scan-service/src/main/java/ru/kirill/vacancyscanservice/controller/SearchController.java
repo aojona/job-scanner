@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kirill.commondto.request.SearchQuery;
+import ru.kirill.commondto.request.SearchMessage;
 import ru.kirill.commondto.response.Vacancy;
 import ru.kirill.commondto.response.VacancyPage;
 import ru.kirill.vacancyscanservice.client.SearchClient;
@@ -17,7 +17,7 @@ public class SearchController {
     private final SearchClient searchClient;
 
     @PostMapping
-    public ResponseEntity<Vacancy> scan(@RequestBody SearchQuery query) {
+    public ResponseEntity<Vacancy> scan(@RequestBody SearchMessage query) {
         VacancyPage vacancyPage = searchClient.searchVacancies(query);
         Vacancy vacancy = vacancyPage.getVacancies().get(0);
         return new ResponseEntity<>(vacancy, HttpStatus.OK);
