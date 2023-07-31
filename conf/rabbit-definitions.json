@@ -6,14 +6,14 @@
   ],
   "users": [
     {
-      "name": "guest",
-      "password": "guest",
+      "name": "user",
+      "password": "pass",
       "tags": "administrator"
     }
   ],
   "permissions": [
     {
-      "user": "guest",
+      "user": "user",
       "vhost": "/",
       "configure": ".*",
       "write": ".*",
