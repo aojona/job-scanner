@@ -4,11 +4,16 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import ru.kirill.commondto.response.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-@RedisHash("vacancy")
-public class VacancyRedis {
+@RedisHash(value = "vacancy")
+public class VacancyRedis implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
@@ -22,4 +27,5 @@ public class VacancyRedis {
     private Area area;
     private Type type;
     private Snippet snippet;
+
 }
