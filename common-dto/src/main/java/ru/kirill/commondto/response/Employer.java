@@ -1,12 +1,12 @@
 package ru.kirill.commondto.response;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Employer extends BaseResponse {
+public class Employer {
 
+    private String id;
+    private String name;
     private String url;
     private String alternateUrl;
     private String vacanciesUrl;

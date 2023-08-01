@@ -1,4 +1,10 @@
 package ru.kirill.commondto.response;
 
-public class Area extends BaseResponse {
+import lombok.Data;
+
+@Data
+public class Area {
+
+    private String id;
+    private String name;
 }

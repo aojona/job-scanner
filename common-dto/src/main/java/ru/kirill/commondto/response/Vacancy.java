@@ -3,15 +3,15 @@ package ru.kirill.commondto.response;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.sql.Timestamp;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Vacancy extends BaseResponse {
+public class Vacancy {
 
+    private String id;
+    private String name;
     private String url;
     private Timestamp publishedAt;
     private Experience experience;
