@@ -3,7 +3,6 @@ package ru.kirill.vacancyscanservice.util;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
@@ -16,7 +15,10 @@ public class QueryUtil {
                 .map(Field::getName)
                 .reduce(
                         UriComponentsBuilder.fromHttpUrl(url),
-                        (uriBuilder, name) -> uriBuilder.queryParam(name, getFieldValue(query, name)),
+                        (uriBuilder, name) -> uriBuilder.queryParam(
+                                convertToSnakeCase(name),
+                                getFieldValue(query, name)
+                        ),
                         (result, notFinal) -> result
                 )
                 .toUriString();
@@ -27,5 +29,11 @@ public class QueryUtil {
         Field field = query.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
         return field.get(query).toString();
+    }
+
+    private static String convertToSnakeCase(String str) {
+        return str
+                .replaceAll("([a-w])([A-W]+)","$1_$2")
+                .toLowerCase();
     }
 }
