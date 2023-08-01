@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    @Value("${rabbitmq.exchange.name}")
+    @Value("${rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${rabbitmq.exchange.routing-key}")
+    @Value("${rabbitmq.routing-key}")
     private String routingKey;
 
     @Bean

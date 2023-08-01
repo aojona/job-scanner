@@ -10,9 +10,8 @@ spring:
     active: rabbitmq
 
 rabbitmq:
-  exchange:
-    name: job-scanner-exchange
-    routing-key: scheduled-key
+  exchange: job-scanner-exchange
+  routing-key: scheduled-key
 
 scheduler:
   fixed-rate: 10
