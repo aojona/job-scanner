@@ -12,4 +12,4 @@ spring:
           username: aojona-config
           password: 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
           clone-on-start: true
-          basedir: ./config-server/src/main/resources/git
+          basedir: ./${spring.application.name}/src/main/resources/git
