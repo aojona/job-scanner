@@ -10,7 +10,9 @@ spring:
     active: rabbitmq
 
 rabbitmq:
+  exchange: job-scanner-exchange
   scheduled-task-queue: scheduled-tasks-queue
+  routing-key: vacancy-storage-key
 
 search:
   url: https://api.hh.ru/vacancies

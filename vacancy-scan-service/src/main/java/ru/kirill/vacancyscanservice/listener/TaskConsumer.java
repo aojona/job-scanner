@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import ru.kirill.commondto.request.SearchMessage;
 import ru.kirill.commondto.response.VacancyPage;
 import ru.kirill.vacancyscanservice.annotation.Consumer;
@@ -15,12 +16,20 @@ import ru.kirill.vacancyscanservice.client.SearchClient;
 public class TaskConsumer {
 
     private final SearchClient searchClient;
+    private final RabbitTemplate template;
 
     @SneakyThrows
     @RabbitHandler
     public void handleSearchMessageTask(SearchMessage searchMessage) {
-        Thread.sleep(1_00);
-        VacancyPage vacancyPage = searchClient.searchVacancies(searchMessage);
-        System.out.println(vacancyPage.getVacancies().get(0));
+        VacancyPage vacancyPage = searchClient
+                .searchVacancies(searchMessage);
+
+        System.out.println(searchMessage);
+        System.out.println(vacancyPage.getPerPage());
+
+
+        vacancyPage
+                .getVacancies()
+                .forEach(template::convertAndSend);
     }
 }
