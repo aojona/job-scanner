@@ -4,9 +4,10 @@ server:
 spring:
   application:
     name: vacancy-scan-service
-  rabbitmq:
-    username: user
-    password: pass
+  config:
+    import: optional:configserver:http://localhost:8888
+  profiles:
+    active: rabbitmq
 
 rabbitmq:
   scheduled-task-queue: scheduled-tasks-queue
