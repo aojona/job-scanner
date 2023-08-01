@@ -13,6 +13,9 @@ spring:
     import: optional:configserver:http://localhost:8888
   profiles:
     active: rabbitmq
+  cache:
+    redis:
+      time-to-live: 10m
 
 rabbitmq:
   exchange: job-scanner-exchange
