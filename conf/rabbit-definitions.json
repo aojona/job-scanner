@@ -29,6 +29,15 @@
       "arguments": {
         "x-queue-type": "classic"
       }
+    },
+    {
+      "name": "vacancy-storage-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
     }
   ],
   "exchanges": [
@@ -49,6 +58,14 @@
       "destination": "scheduled-tasks-queue",
       "destination_type": "queue",
       "routing_key": "scheduled-key",
+      "arguments": {}
+    },
+    {
+      "source": "job-scanner-exchange",
+      "vhost": "/",
+      "destination": "vacancy-storage-queue",
+      "destination_type": "queue",
+      "routing_key": "vacancy-storage-key",
       "arguments": {}
     }
   ]
