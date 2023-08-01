@@ -4,3 +4,17 @@ server:
 spring:
   application:
     name: vacancy-storage-service
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: pass
+  config:
+    import: optional:configserver:http://localhost:8888
+  profiles:
+    active: rabbitmq
+
+rabbitmq:
+  exchange: job-scanner-exchange
+  vacancy-storage-queue: vacancy-storage-queue
+#  routing-key:
