@@ -15,7 +15,11 @@ spring:
     active: rabbitmq
   cache:
     redis:
-      time-to-live: 10m
+      time-to-live: 1h      # expiration time in cache, supported units: ns, us, ms, s, m, h, d
+
+redis:
+  time: 24                   # expiration time in db: must be more 0
+  time-unit: hours           # unit of expiration time: milliseconds, seconds, minutes, hours or days
 
 rabbitmq:
   exchange: job-scanner-exchange

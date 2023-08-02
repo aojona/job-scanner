@@ -22,6 +22,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.modelmapper:modelmapper:3.1.1'
 	implementation project(":common-dto")
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
