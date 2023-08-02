@@ -2,7 +2,7 @@ version: "3"
 
 services:
   rabbit:
-    container_name: aojona-rabbitmq
+    container_name: rabbitmq
     image: rabbitmq:3.12-management
     volumes:
       - ./conf/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
@@ -10,3 +10,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  redis:
+    container_name: redis
+    image: redis:7.0.12-alpine
+    command: sh -c "redis-server --requirepass $${REDIS_PASSWORD}"
+    environment:
+      - REDIS_PASSWORD=pass
+    ports:
+      - "6379:6379"
