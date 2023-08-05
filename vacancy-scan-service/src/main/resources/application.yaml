@@ -16,3 +16,7 @@ rabbitmq:
 
 search:
   url: https://api.hh.ru/vacancies
+
+executors:
+  threads:
+    scheduled: 1
