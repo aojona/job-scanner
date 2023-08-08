@@ -6,5 +6,5 @@ import lombok.Data;
 public class SubscriptionResponse {
 
     private String request;
-    private Long chatId;
+    private Long memberId;
 }
