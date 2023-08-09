@@ -18,32 +18,32 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping
-    private ResponseEntity<PageResponse<MemberResponse>> getAll(Pageable pageable) {
+    public ResponseEntity<PageResponse<MemberResponse>> getAll(Pageable pageable) {
         PageResponse<MemberResponse> pageResponse = PageResponse.of(memberService.getAll(pageable));
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
 
     @PostMapping
-    private ResponseEntity<MemberResponse> create(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<MemberResponse> create(@RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.create(memberRequest);
         return new ResponseEntity<>(memberResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<MemberResponse> get(@PathVariable long id) {
+    public ResponseEntity<MemberResponse> get(@PathVariable long id) {
         MemberResponse memberResponse = memberService.get(id);
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<MemberResponse> update(@PathVariable long id,
+    public ResponseEntity<MemberResponse> update(@PathVariable long id,
                                                   @RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.update(id, memberRequest);
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<?> delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable long id) {
         memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
