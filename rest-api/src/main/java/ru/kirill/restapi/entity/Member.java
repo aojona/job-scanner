@@ -2,7 +2,6 @@ package ru.kirill.restapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -13,7 +12,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String login;
+    private String username;
 
     private String password;
 
