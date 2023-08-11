@@ -7,29 +7,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.kirill.commondto.response.ExceptionResponse;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+
+import static ru.kirill.restapi.util.ResponseUtil.createExceptionResponse;
 
 @RestControllerAdvice
 public class ExceptionController {
 
     public ResponseEntity<ExceptionResponse> handleException(Exception e, HttpServletRequest httpServletRequest,
                                                              HttpStatus status) {
-        ExceptionResponse response = createResponse(e, httpServletRequest, status);
+        ExceptionResponse response = createExceptionResponse(e, httpServletRequest, status.value());
         return new ResponseEntity<>(response, status);
     }
 
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleException(SQLException exception, HttpServletRequest httpServletRequest) {
         return handleException(exception, httpServletRequest, HttpStatus.BAD_REQUEST);
-    }
-
-    private static ExceptionResponse createResponse(Exception e, HttpServletRequest httpServletRequest, HttpStatus status) {
-        return ExceptionResponse
-                .builder()
-                .timestamp(LocalDateTime.now())
-                .status(status.value())
-                .error(e.getMessage())
-                .path(httpServletRequest.getRequestURI())
-                .build();
     }
 }
