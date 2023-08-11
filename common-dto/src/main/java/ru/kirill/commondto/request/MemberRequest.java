@@ -6,5 +6,5 @@ import lombok.Data;
 public class MemberRequest {
 
     private String username;
-    private String password;
+    private String rawPassword;
 }
