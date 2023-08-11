@@ -3,10 +3,14 @@ package ru.kirill.restapi.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.response.MemberResponse;
+import ru.kirill.restapi.config.security.SecurityUser;
 import ru.kirill.restapi.entity.Member;
 import ru.kirill.restapi.exception.MemberNotFoundException;
 import ru.kirill.restapi.mapper.MemberMapper;
@@ -16,7 +20,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
@@ -62,5 +66,13 @@ public class MemberService {
                 .findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(id));
         memberRepository.delete(member);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return memberRepository
+                .findByUsername(username)
+                .map(SecurityUser::new)
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 }
