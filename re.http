@@ -1,0 +1,11 @@
+###
+# curl -X 'GET'
+#  'http://192.168.0.100:58402/member/1'
+#  -H 'accept: */*'
+#  -H 'Authorization: Basic YWQ6MTIz'
+GET http://192.168.0.100:58402/member/1
+accept: */*
+Authorization: Basic YWQ6MTIz
+
+###
+
