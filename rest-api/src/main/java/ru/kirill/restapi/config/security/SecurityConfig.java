@@ -1,6 +1,8 @@
 package ru.kirill.restapi.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import static ru.kirill.restapi.util.ResponseUtil.createExceptionResponse;
 @Configuration
 @RequiredArgsConstructor
 @EnableMethodSecurity
+@SecurityScheme(type = SecuritySchemeType.HTTP, name = "basic", scheme = "basic")
 public class SecurityConfig {
 
     private final ObjectMapper objectMapper;
