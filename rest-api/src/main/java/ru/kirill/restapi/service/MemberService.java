@@ -2,13 +2,14 @@ package ru.kirill.restapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.request.MemberRequest;
+import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.restapi.config.security.SecurityUser;
 import ru.kirill.restapi.entity.Member;
@@ -32,9 +33,10 @@ public class MemberService implements UserDetailsService {
                 .orElseThrow(() -> new MemberNotFoundException(id));
     }
 
-    public Page<MemberResponse> getAll(Pageable pageable) {
+    public Page<MemberResponse> getAll(PageableRequest pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         return memberRepository
-                .findAll(pageable)
+                .findAll(pageRequest)
                 .map(memberMapper::toDto);
     }
 
