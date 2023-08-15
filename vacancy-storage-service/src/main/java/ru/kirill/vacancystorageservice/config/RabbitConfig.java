@@ -14,6 +14,9 @@ public class RabbitConfig {
     @Value("${rabbitmq.exchange}")
     public String exchange;
 
+    @Value("${rabbitmq.routing-key}")
+    public String routingKey;
+
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -24,6 +27,7 @@ public class RabbitConfig {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter);
         template.setExchange(exchange);
+        template.setRoutingKey(routingKey);
         return template;
     }
 }
