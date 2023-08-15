@@ -31,7 +31,34 @@
       }
     },
     {
-      "name": "vacancy-storage-queue",
+      "name": "vacancy-save-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "create-notify-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "send-notify-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "vacancy-analytics-queue",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -42,9 +69,18 @@
   ],
   "exchanges": [
     {
-      "name": "job-scanner-exchange",
+      "name": "direct-exchange",
       "vhost": "/",
       "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "fanout-exchange",
+      "vhost": "/",
+      "type": "fanout",
       "durable": true,
       "auto_delete": false,
       "internal": false,
@@ -53,7 +89,7 @@
   ],
   "bindings": [
     {
-      "source": "job-scanner-exchange",
+      "source": "direct-exchange",
       "vhost": "/",
       "destination": "scheduled-tasks-queue",
       "destination_type": "queue",
@@ -61,11 +97,35 @@
       "arguments": {}
     },
     {
-      "source": "job-scanner-exchange",
+      "source": "direct-exchange",
       "vhost": "/",
-      "destination": "vacancy-storage-queue",
+      "destination": "vacancy-save-queue",
       "destination_type": "queue",
-      "routing_key": "vacancy-storage-key",
+      "routing_key": "vacancy-save-key",
+      "arguments": {}
+    },
+    {
+      "source": "direct-exchange",
+      "vhost": "/",
+      "destination": "create-notify-queue",
+      "destination_type": "queue",
+      "routing_key": "create-notify-key",
+      "arguments": {}
+    },
+    {
+      "source": "fanout-exchange",
+      "vhost": "/",
+      "destination": "send-notify-queue",
+      "destination_type": "queue",
+      "routing_key": "send-notify-key",
+      "arguments": {}
+    },
+    {
+      "source": "direct-exchange",
+      "vhost": "/",
+      "destination": "vacancy-analytics-queue",
+      "destination_type": "queue",
+      "routing_key": "vacancy-analytics-key",
       "arguments": {}
     }
   ]
