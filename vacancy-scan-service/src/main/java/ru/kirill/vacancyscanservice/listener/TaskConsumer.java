@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 
 @Consumer
 @RequiredArgsConstructor
-@RabbitListener(queues = "${rabbitmq.scheduled-task-queue}")
+@RabbitListener(queues = "${rabbitmq.listen-queue}")
 public class TaskConsumer {
 
     private final SearchClient searchClient;

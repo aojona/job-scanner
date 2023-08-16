@@ -10,7 +10,7 @@ spring:
     active: rabbitmq
 
 rabbitmq:
-  exchange: job-scanner-exchange
+  exchange: direct-exchange
   routing-key: scheduled-key
 
 scheduler:
