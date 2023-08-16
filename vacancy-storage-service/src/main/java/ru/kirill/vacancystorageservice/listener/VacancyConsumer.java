@@ -19,7 +19,7 @@ public class VacancyConsumer {
 
     @SneakyThrows
     @RabbitHandler
-    public void handleSearchMessageTask(Vacancy vacancy) {
+    public void handleMessage(Vacancy vacancy) {
         if (vacancyService.get(vacancy.getId()).isEmpty()) {
             template.convertAndSend(vacancyService.saveOrUpdate(vacancy));
         } else {
