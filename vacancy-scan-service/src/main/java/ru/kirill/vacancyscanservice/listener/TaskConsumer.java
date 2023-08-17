@@ -2,21 +2,25 @@ package ru.kirill.vacancyscanservice.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import ru.kirill.commondto.request.SearchMessage;
+import org.springframework.beans.factory.annotation.Value;
 import ru.kirill.commondto.response.AccessResponse;
-import ru.kirill.vacancyscanservice.annotation.Consumer;
+import ru.kirill.commondto.response.RequestTask;
+import ru.kirill.commondto.response.Vacancy;
 import ru.kirill.vacancyscanservice.client.SearchClient;
 import ru.kirill.vacancyscanservice.feign.RateLimiterClient;
+
+import java.util.List;
 import java.util.concurrent.*;
 
-@Consumer
 @RequiredArgsConstructor
 @RabbitListener(queues = "${rabbitmq.listen-queue}")
 public class TaskConsumer {
+
+    @Value("${rate-limiter.bucket-name}")
+    private String bucketName;
 
     private final SearchClient searchClient;
     private final RabbitTemplate template;
@@ -24,34 +28,33 @@ public class TaskConsumer {
     private final ScheduledExecutorService executorService;
 
     @RabbitHandler
-    public void handleSearchMessageTask(SearchMessage searchMessage) {
-        AccessResponse accessResponse = rateLimiterClient.checkAccess("vacancy-scan-service");
-        executeIfAccess(accessResponse, searchMessage);
+    public void handleTask(RequestTask task) {
+        AccessResponse accessResponse = rateLimiterClient.checkAccess(bucketName);
+        executeIfAccess(accessResponse, task);
     }
 
     @SneakyThrows
-    private void executeIfAccess(AccessResponse accessResponse, SearchMessage searchMessage) {
+    private void executeIfAccess(AccessResponse accessResponse, RequestTask task) {
         if (accessResponse.isAccess()) {
-            searchVacancies(searchMessage);
+            List<Vacancy> vacancies = searchVacancies(task.getQueryParams());
+            vacancies.forEach(template::convertAndSend);
         } else {
             ScheduledFuture<AccessResponse> scheduledTask = createScheduledTask(accessResponse);
-            executeIfAccess(scheduledTask.get(), searchMessage);
+            executeIfAccess(scheduledTask.get(), task);
         }
     }
 
-    @NotNull
     private ScheduledFuture<AccessResponse> createScheduledTask(AccessResponse accessResponse) {
         return executorService.schedule(
-                () -> rateLimiterClient.checkAccess("vacancy-scan-service"),
+                () -> rateLimiterClient.checkAccess(bucketName),
                 accessResponse.getNanosToWait(),
                 TimeUnit.NANOSECONDS
         );
     }
 
-    private void searchVacancies(SearchMessage searchMessage) {
-        searchClient
-                .searchVacancies(searchMessage)
-                .getVacancies()
-                .forEach(template::convertAndSend);
+    private List<Vacancy> searchVacancies(RequestTask.QueryParams queryParams) {
+        return searchClient
+                .searchVacancies(queryParams)
+                .getVacancies();
     }
 }
