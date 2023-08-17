@@ -6,15 +6,16 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import ru.kirill.commondto.response.AccessResponse;
-import ru.kirill.commondto.response.RequestTask;
+import ru.kirill.commondto.request.RequestTask;
 import ru.kirill.commondto.response.Vacancy;
 import ru.kirill.vacancyscanservice.client.SearchClient;
 import ru.kirill.vacancyscanservice.feign.RateLimiterClient;
-
 import java.util.List;
 import java.util.concurrent.*;
 
+@Component
 @RequiredArgsConstructor
 @RabbitListener(queues = "${rabbitmq.listen-queue}")
 public class TaskConsumer {

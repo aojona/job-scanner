@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kirill.commondto.response.RequestTask;
+import ru.kirill.commondto.request.RequestTask;
 import ru.kirill.schedulerservice.mapper.SubscriptionMapper;
 import ru.kirill.schedulerservice.repository.SubscriptionRepository;
 

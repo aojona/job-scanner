@@ -1,4 +1,4 @@
-package ru.kirill.commondto.response;
+package ru.kirill.commondto.request;
 
 import lombok.Data;
 
@@ -11,6 +11,6 @@ public class RequestTask {
     @Data
     public static class QueryParams {
 
-        private String request;
+        private String text;
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.kirill.commondto.response.RequestTask;
+import ru.kirill.commondto.request.RequestTask;
 import ru.kirill.schedulerservice.service.SubscriptionService;
 import java.util.concurrent.TimeUnit;
 
