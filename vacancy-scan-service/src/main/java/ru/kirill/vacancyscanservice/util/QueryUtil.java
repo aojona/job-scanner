@@ -9,18 +9,19 @@ import java.util.Arrays;
 @UtilityClass
 public class QueryUtil {
 
-    public static <Q> String createUrlWithParameters(String url, Q query) {
+    public static <Q> String createUrlWithParameters(String url, String path, Q query) {
         return Arrays
                 .stream(query.getClass().getDeclaredFields())
                 .map(Field::getName)
                 .reduce(
-                        UriComponentsBuilder.fromHttpUrl(url),
+                        UriComponentsBuilder.fromHttpUrl(url).path(path),
                         (uriBuilder, name) -> uriBuilder.queryParam(
                                 convertToSnakeCase(name),
                                 getFieldValue(query, name)
                         ),
                         (result, notFinal) -> result
                 )
+                .build()
                 .toUriString();
     }
 
