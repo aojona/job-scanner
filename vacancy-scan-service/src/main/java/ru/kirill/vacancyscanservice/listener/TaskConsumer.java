@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import ru.kirill.commondto.response.AccessResponse;
 import ru.kirill.commondto.request.RequestTask;
 import ru.kirill.commondto.response.Vacancy;
+import ru.kirill.commondto.response.VacancyResponse;
 import ru.kirill.vacancyscanservice.client.SearchClient;
 import ru.kirill.vacancyscanservice.feign.RateLimiterClient;
 import java.util.List;
@@ -37,8 +38,10 @@ public class TaskConsumer {
     @SneakyThrows
     private void executeIfAccess(AccessResponse accessResponse, RequestTask task) {
         if (accessResponse.isAccess()) {
-            List<Vacancy> vacancies = searchVacancies(task.getQueryParams());
-            vacancies.forEach(template::convertAndSend);
+            searchVacancies(task.getQueryParams())
+                    .stream()
+                    .map(vacancy -> new VacancyResponse(task.getMemberId(), vacancy))
+                    .forEach(template::convertAndSend);
         } else {
             ScheduledFuture<AccessResponse> scheduledTask = createScheduledTask(accessResponse);
             executeIfAccess(scheduledTask.get(), task);
