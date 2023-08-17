@@ -11,7 +11,7 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String request;
+    private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
