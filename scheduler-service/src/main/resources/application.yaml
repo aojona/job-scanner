@@ -7,11 +7,14 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
   profiles:
-    active: rabbitmq
+    active:
+    - postgresql
+    - rabbitmq
 
 rabbitmq:
   exchange: direct-exchange
   routing-key: scheduled-key
 
 scheduler:
-  fixed-rate: 10
+  fixed-rate: 30
+  batch-size: 1000
