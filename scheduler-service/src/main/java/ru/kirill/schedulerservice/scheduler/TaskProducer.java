@@ -2,29 +2,32 @@ package ru.kirill.schedulerservice.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.annotation.Scheduled;
-import ru.kirill.commondto.request.SearchMessage;
-import ru.kirill.schedulerservice.annotation.Scheduler;
+import org.springframework.stereotype.Component;
+import ru.kirill.commondto.response.RequestTask;
+import ru.kirill.schedulerservice.service.SubscriptionService;
 import java.util.concurrent.TimeUnit;
 
-@Scheduler
+@Component
 @RequiredArgsConstructor
 public class TaskProducer {
 
+    private final SubscriptionService subscriptionService;
     private final RabbitTemplate template;
 
-    @Scheduled(fixedRateString = "${scheduler.fixed-rate}", timeUnit = TimeUnit.SECONDS)
-    public void sendTaskToVacancyScanService() {
-        SearchMessage message = buildHelloWorldMessage();
-        template.convertAndSend(message);
-    }
+    @Value("${scheduler.batch-size}")
+    private int batchSize;
 
-    private static SearchMessage buildHelloWorldMessage() {
-        return SearchMessage
-                .builder()
-                .text("java")
-                .page(10)
-                .perPage(15)
-                .build();
+    @Scheduled(fixedRateString = "${scheduler.fixed-rate}", timeUnit = TimeUnit.SECONDS)
+    public void createTasks() {
+        Slice<RequestTask> slice = subscriptionService.getSlice(PageRequest.of(0, batchSize));
+        slice.forEach(template::convertAndSend);
+        while (slice.hasNext()) {
+            slice = subscriptionService.getSlice(slice.nextPageable());
+            slice.forEach(template::convertAndSend);
+        }
     }
 }
