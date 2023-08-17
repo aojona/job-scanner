@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8021
 
 spring:
   application:
@@ -15,8 +15,12 @@ rabbitmq:
   routing-key: vacancy-save-key
 
 search:
-  url: https://api.hh.ru/vacancies
+  url: https://api.hh.ru
+  path: vacancies
 
 executors:
   threads:
     scheduled: 1
+
+rate-limiter:
+  bucket-name: "vacancy-scan-service"
