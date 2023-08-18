@@ -4,15 +4,12 @@ server:
 spring:
   application:
     name: vacancy-storage-service
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password: pass
   config:
     import: optional:configserver:http://localhost:8888
   profiles:
-    active: rabbitmq
+    active:
+    - rabbitmq
+    - redis
   cache:
     redis:
       time-to-live: 3d      # expiration time in cache, supported units: ns, us, ms, s, m, h, d
