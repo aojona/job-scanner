@@ -18,3 +18,8 @@ rabbitmq:
 scheduler:
   fixed-rate: 30
   batch-size: 1000
+
+request-task:
+  custom-query-params:
+    per-page: 10
+    order-by: publication_time
