@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class TaskProducer {
 
     private final SubscriptionService subscriptionService;
+    private final TaskCustomizer taskCustomizer;
     private final RabbitTemplate template;
 
     @Value("${scheduler.batch-size}")
@@ -24,10 +25,17 @@ public class TaskProducer {
     @Scheduled(fixedRateString = "${scheduler.fixed-rate}", timeUnit = TimeUnit.SECONDS)
     public void createTasks() {
         Slice<RequestTask> slice = subscriptionService.getSlice(PageRequest.of(0, batchSize));
-        slice.forEach(template::convertAndSend);
+        sendTaskWithCustomParams(slice);
         while (slice.hasNext()) {
             slice = subscriptionService.getSlice(slice.nextPageable());
-            slice.forEach(template::convertAndSend);
+            sendTaskWithCustomParams(slice);
         }
+    }
+
+    private void sendTaskWithCustomParams(Slice<RequestTask> slice) {
+        slice
+                .stream()
+                .peek(task -> taskCustomizer.setCustomQueryParams(task.getQueryParams()))
+                .forEach(template::convertAndSend);
     }
 }
