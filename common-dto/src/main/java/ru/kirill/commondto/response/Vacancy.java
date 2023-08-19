@@ -3,9 +3,10 @@ package ru.kirill.commondto.response;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
+import ru.kirill.commondto.jackson.JsonZonedDateTime;
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -17,7 +18,8 @@ public class Vacancy implements Serializable {
     private String id;
     private String name;
     private String url;
-    private Timestamp publishedAt;
+    @JsonZonedDateTime
+    private ZonedDateTime publishedAt;
     private Experience experience;
     private Employer employer;
     private Employment employment;
