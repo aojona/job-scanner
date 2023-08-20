@@ -1,12 +1,12 @@
 package ru.kirill.vacancystorageservice.listener;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import ru.kirill.commondto.response.Vacancy;
+import ru.kirill.commondto.response.VacancyResponse;
 import ru.kirill.vacancystorageservice.service.VacancyService;
 
 @Component
@@ -16,14 +16,14 @@ public class VacancyConsumer {
 
     private final VacancyService vacancyService;
     private final RabbitTemplate template;
+    private final DateAdviser dateAdviser;
 
-    @SneakyThrows
     @RabbitHandler
-    public void handleMessage(Vacancy vacancy) {
-        if (vacancyService.get(vacancy.getId()).isEmpty()) {
-            template.convertAndSend(vacancyService.saveOrUpdate(vacancy));
-        } else {
-            vacancyService.saveOrUpdate(vacancy);
+    public void handleMessage(VacancyResponse vacancyResponse) {
+        Vacancy vacancy = vacancyResponse.getVacancy();
+        if (dateAdviser.isNew(vacancy.getPublishedAt())) {
+            template.convertAndSend(vacancyResponse);
         }
+        vacancyService.saveOrUpdate(vacancy);
     }
 }

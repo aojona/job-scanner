@@ -22,3 +22,7 @@ rabbitmq:
   exchange: direct-exchange
   routing-key: create-notify-key
   listen-queue: vacancy-save-queue
+
+vacancy:
+  novelty-time: 24
+  unit: hours
