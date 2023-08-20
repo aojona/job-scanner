@@ -13,11 +13,14 @@ public class QueryUtil {
         return Arrays
                 .stream(query.getClass().getDeclaredFields())
                 .map(Field::getName)
+                .map(name -> getField(query, name))
+                .peek(field -> field.setAccessible(true))
+                .filter(field -> getFieldValue(query, field) != null)
                 .reduce(
                         UriComponentsBuilder.fromHttpUrl(url).path(path),
-                        (uriBuilder, name) -> uriBuilder.queryParam(
-                                convertToSnakeCase(name),
-                                getFieldValue(query, name)
+                        (uriBuilder, field) -> uriBuilder.queryParam(
+                                convertToSnakeCase(field.getName()),
+                                getFieldValue(query, field)
                         ),
                         (result, notFinal) -> result
                 )
@@ -26,10 +29,13 @@ public class QueryUtil {
     }
 
     @SneakyThrows
-    private static <Q> Object getFieldValue(Q query, String fieldName) {
-        Field field = query.getClass().getDeclaredField(fieldName);
-        field.setAccessible(true);
-        return field.get(query).toString();
+    private static <Q> Field getField(Q query, String fieldName) {
+        return query.getClass().getDeclaredField(fieldName);
+    }
+
+    @SneakyThrows
+    private static <Q> Object getFieldValue(Q query, Field field) {
+        return field.get(query);
     }
 
     private static String convertToSnakeCase(String str) {
