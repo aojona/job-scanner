@@ -12,11 +12,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String username;
-
-    private String password;
-
-    private String role;
+    private String telegramChatId;
 
     @OneToMany(mappedBy = "member")
     private List<Subscription> subscriptions;

@@ -35,6 +35,7 @@ public class TaskProducer {
     private void sendTaskWithCustomParams(Slice<RequestTask> slice) {
         slice
                 .stream()
+                .filter(task -> task.getChatId() != null)
                 .peek(task -> taskCustomizer.setCustomQueryParams(task.getQueryParams()))
                 .forEach(template::convertAndSend);
     }
