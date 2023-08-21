@@ -12,9 +12,7 @@ public class Employer implements Serializable {
 
     private String id;
     private String name;
-    private String url;
     private String alternateUrl;
-    private String vacanciesUrl;
     private Boolean accreditedItEmployer;
     private Boolean trusted;
 }

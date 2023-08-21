@@ -17,7 +17,7 @@ public class Vacancy implements Serializable {
 
     private String id;
     private String name;
-    private String url;
+    private String alternateUrl;
     @JsonZonedDateTime
     private ZonedDateTime publishedAt;
     private Experience experience;
