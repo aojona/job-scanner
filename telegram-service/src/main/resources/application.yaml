@@ -8,3 +8,12 @@ spring:
     import: optional:configserver:http://localhost:8888
   profiles:
     active: rabbitmq
+
+rabbitmq:
+  listen-queue: send-notify-queue
+
+telegram:
+  bot:
+    name: ${BOT_NAME:@job_scanner_bot}
+    token: ${BOT_TOKEN:6419123727:AAHYICyzL27LoPyfGBwYQn1EpsTjlOrDpgg}
+
