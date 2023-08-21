@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import ru.kirill.commondto.response.Notification;
+import ru.kirill.commondto.response.VacancyResponse;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Locale;
@@ -14,6 +16,13 @@ public class NotificationService {
 
     private final MessageSource messageSource;
     private final Locale locale = Locale.getDefault();
+
+    public Notification createNotification(VacancyResponse vacancyResponse) {
+        return new Notification(
+                vacancyResponse.getChatId(),
+                createNotificationText(vacancyResponse.getVacancy())
+        );
+    }
 
     public <V> String createNotificationText(V v) {
         Class<?> clazz = v.getClass();
@@ -29,7 +38,7 @@ public class NotificationService {
                 .peek(field -> field.setAccessible(true))
                 .filter(field -> getFieldValue(v, field) != null)
                 .forEach(field -> {
-                    if (field.getType().getClassLoader () == ClassLoader.getSystemClassLoader()) {
+                    if (field.getType().getClassLoader() == ClassLoader.getSystemClassLoader()) {
                         appendMessages(text, getFieldValue(v, field), code + "." + field.getName(), field.getType());
                     } else {
                         appendMessageIfNotBlank(text, getMessageForFieldValue(v, field, code));
@@ -38,9 +47,8 @@ public class NotificationService {
     }
 
     private static void appendMessageIfNotBlank(StringBuilder text, String message) {
-        text.append(message);
         if (message != null && !message.isBlank()) {
-            text.append("\n");
+            text.append(message).append("\n");
         }
     }
 

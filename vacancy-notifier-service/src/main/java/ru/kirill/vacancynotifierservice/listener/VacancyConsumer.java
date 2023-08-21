@@ -3,6 +3,7 @@ package ru.kirill.vacancynotifierservice.listener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import ru.kirill.commondto.response.VacancyResponse;
 import ru.kirill.vacancynotifierservice.service.NotificationService;
@@ -13,9 +14,12 @@ import ru.kirill.vacancynotifierservice.service.NotificationService;
 public class VacancyConsumer {
 
     private final NotificationService notificationService;
+    private final RabbitTemplate template;
 
     @RabbitHandler
     public void handleMessage(VacancyResponse vacancyResponse) {
-        String notification = notificationService.createNotificationText(vacancyResponse.getVacancy());
+        if (vacancyResponse.getChatId() != null) {
+            template.convertAndSend(notificationService.createNotification(vacancyResponse));
+        }
     }
 }
