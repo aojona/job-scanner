@@ -12,7 +12,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String telegramChatId;
+    @Column(name = "telegram_chat_id")
+    private Long chatId;
 
     @OneToMany(mappedBy = "member")
     private List<Subscription> subscriptions;

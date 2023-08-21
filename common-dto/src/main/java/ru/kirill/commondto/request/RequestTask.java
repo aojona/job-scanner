@@ -11,7 +11,7 @@ public class RequestTask implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String chatId;
+    private Long chatId;
     private QueryParams queryParams;
 
     @Data

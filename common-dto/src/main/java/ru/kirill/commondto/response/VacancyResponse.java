@@ -15,6 +15,6 @@ public class VacancyResponse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Long memberId;
+    private Long chatId;
     private Vacancy vacancy;
 }
