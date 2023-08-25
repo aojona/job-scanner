@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8080
   error:
     include-message: always
 
@@ -14,3 +14,9 @@ spring:
     properties:
       hibernate:
         show_sql: true
+
+jwt:
+  access-key:
+    secret: ZGlzdGFuY2VkcmllZGNvdW50cnlsaWtlbHllaWdodGJyaWVmZmFzdGVyd2VyZXRhbms=
+    expiration-time: 24
+    expiration-unit: hours
