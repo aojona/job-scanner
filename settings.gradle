@@ -1,3 +1,9 @@
+pluginManagement {
+    plugins {
+        id 'io.freefair.lombok' version "${lombok}"
+    }
+}
+
 rootProject.name = 'job-scanner'
 
 include 'job-server'

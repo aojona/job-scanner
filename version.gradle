@@ -1,0 +1,11 @@
+ext {
+    versions = [
+            'flywaydb':     '9.21.1',
+            'jjwt':         '0.11.5',
+            'modelmapper':  '3.1.1',
+            'springdoc':    '2.1.0',
+            'jackson':      '2.15.2',
+            'bucket4j':     '7.6.0',
+            'telegrambots': '6.8.0'
+    ]
+}
