@@ -3,6 +3,8 @@ package ru.kirill.restapi.util;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import ru.kirill.restapi.security.JwtKey;
 import ru.kirill.restapi.security.JwtProperties;
@@ -41,5 +43,13 @@ public class JwtTokenProvider {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public Authentication getAuthentication(@NonNull String token) {
+        return new UsernamePasswordAuthenticationToken(
+                JwtUtil.extractUsername(token, accessKey.getSecret()),
+                null,
+                JwtUtil.extractAuthorities(token, accessKey.getSecret(), AUTHORITIES_CLAIM)
+        );
     }
 }
