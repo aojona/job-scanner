@@ -10,8 +10,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.kirill.restapi.util.JwtTokenProvider;
-import ru.kirill.restapi.util.JwtUtil;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                  @NonNull FilterChain filterChain) {
         SecurityContext context = SecurityContextHolder.getContext();
         if (context.getAuthentication() == null) {
-            String token = JwtUtil.resolveTokenFromRequest(request);
+            String token = jwtTokenProvider.getAccessTokenFromCookies(request);
             if (token != null && jwtTokenProvider.validateAccessToken(token)) {
                 context.setAuthentication(jwtTokenProvider.getAuthentication(token));
             }

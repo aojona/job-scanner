@@ -20,3 +20,4 @@ jwt:
     secret: ZGlzdGFuY2VkcmllZGNvdW50cnlsaWtlbHllaWdodGJyaWVmZmFzdGVyd2VyZXRhbms=
     expiration-time: 24
     expiration-unit: hours
+    cookie-name: access_token

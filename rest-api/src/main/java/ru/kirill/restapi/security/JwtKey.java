@@ -12,10 +12,12 @@ public class JwtKey {
     private final Key secret;
     private final long expirationTime;
     private final ChronoUnit expirationUnit;
+    private final String cookieName;
 
-    public JwtKey(String secret, long expirationTime, ChronoUnit expirationUnit) {
+    public JwtKey(String secret, long expirationTime, ChronoUnit expirationUnit, String cookieName) {
         this.secret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         this.expirationTime = expirationTime;
         this.expirationUnit = expirationUnit;
+        this.cookieName = cookieName;
     }
 }

@@ -1,14 +1,16 @@
-package ru.kirill.restapi.util;
+package ru.kirill.restapi.security;
 
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import ru.kirill.restapi.security.JwtKey;
-import ru.kirill.restapi.security.JwtProperties;
-import ru.kirill.restapi.security.SecurityUser;
+import ru.kirill.restapi.config.JwtProperties;
+import ru.kirill.restapi.util.JwtUtil;
+
 import java.util.Date;
 
 @Slf4j
@@ -51,5 +53,14 @@ public class JwtTokenProvider {
                 null,
                 JwtUtil.extractAuthorities(token, accessKey.getSecret(), AUTHORITIES_CLAIM)
         );
+    }
+
+    public ResponseCookie generateAccessTokenCookie(SecurityUser securityUser) {
+        String token = generateAccessToken(securityUser);
+        return JwtUtil.generateAccessTokenCookie(token, accessKey.getCookieName());
+    }
+
+    public String getAccessTokenFromCookies(HttpServletRequest request) {
+        return JwtUtil.getTokenFromCookies(request, accessKey.getCookieName());
     }
 }
