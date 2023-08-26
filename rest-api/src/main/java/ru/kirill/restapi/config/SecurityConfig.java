@@ -1,4 +1,4 @@
-package ru.kirill.restapi.config.security;
+package ru.kirill.restapi.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

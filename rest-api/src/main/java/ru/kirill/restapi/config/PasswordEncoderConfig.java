@@ -1,4 +1,4 @@
-package ru.kirill.restapi.config.security;
+package ru.kirill.restapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
