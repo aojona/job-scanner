@@ -24,7 +24,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.kirill.commondto.response.ExceptionResponse;
-import ru.kirill.restapi.security.JwtProperties;
 import ru.kirill.restapi.security.JwtTokenFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
