@@ -3,10 +3,12 @@ package ru.kirill.restapi.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import org.flywaydb.core.internal.util.StringUtils;
+import org.springframework.http.ResponseCookie;
+import org.springframework.web.util.WebUtils;
 import ru.kirill.restapi.enums.Role;
 import java.security.Key;
 import java.time.ZonedDateTime;
@@ -17,17 +19,6 @@ import java.util.List;
 
 @UtilityClass
 public class JwtUtil {
-
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer ";
-
-    public String resolveTokenFromRequest(HttpServletRequest request) {
-        String header = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(header) && header.startsWith(AUTHORIZATION_HEADER_PREFIX)) {
-            return header.split("\\s+")[1];
-        }
-        return null;
-    }
 
     public static Date calculateExpiration(long expirationTime, ChronoUnit expirationUnit) {
         ZonedDateTime expiration = ZonedDateTime.now().plus(expirationTime, expirationUnit);
@@ -59,5 +50,21 @@ public class JwtUtil {
 
     public static JwtParser getJwtParser(Key secret) {
         return Jwts.parserBuilder().setSigningKey(secret).build();
+    }
+
+    public static String getTokenFromCookies(HttpServletRequest request, String cookieName) {
+        Cookie cookie = WebUtils.getCookie(request, cookieName);
+        if (cookie != null) {
+            return cookie.getValue();
+        } else {
+            return null;
+        }
+    }
+
+    public static ResponseCookie generateAccessTokenCookie(String token, String cookieName) {
+        return ResponseCookie
+                .from(cookieName, token)
+                .httpOnly(true)
+                .build();
     }
 }
