@@ -31,4 +31,15 @@ public class JwtTokenProvider {
                 .claim(AUTHORITIES_CLAIM, securityUser.getAuthorities())
                 .signWith(accessKey.getSecret()).compact();
     }
+
+    public boolean validateAccessToken(@NonNull String accessToken) {
+        try {
+            JwtUtil
+                    .getJwtParser(accessKey.getSecret())
+                    .parseClaimsJws(accessToken);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
 }
