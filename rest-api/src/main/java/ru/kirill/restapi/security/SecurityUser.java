@@ -1,4 +1,4 @@
-package ru.kirill.restapi.config.security;
+package ru.kirill.restapi.security;
 
 import lombok.Getter;
 import org.springframework.security.core.userdetails.User;

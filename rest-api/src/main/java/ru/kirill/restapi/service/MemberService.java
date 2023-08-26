@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.response.MemberResponse;
-import ru.kirill.restapi.config.security.SecurityUser;
+import ru.kirill.restapi.security.SecurityUser;
 import ru.kirill.restapi.entity.Member;
 import ru.kirill.restapi.exception.MemberNotFoundException;
 import ru.kirill.restapi.mapper.MemberMapper;

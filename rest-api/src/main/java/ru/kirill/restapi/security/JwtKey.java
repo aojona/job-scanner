@@ -1,4 +1,4 @@
-package ru.kirill.restapi.config.security;
+package ru.kirill.restapi.security;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
