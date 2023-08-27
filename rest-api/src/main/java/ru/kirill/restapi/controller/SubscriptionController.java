@@ -18,7 +18,7 @@ import ru.kirill.restapi.service.SubscriptionService;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/subscription")
+@RequestMapping("/api/subscription")
 @SecurityRequirement(name = "basic")
 @Tag(name="Упраление подписками")
 public class SubscriptionController {

@@ -17,7 +17,7 @@ import ru.kirill.restapi.service.MemberService;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 @SecurityRequirement(name = "basic")
 @Tag(name="Упраление пользователями")
 public class MemberController {
