@@ -5,12 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import ru.kirill.restapi.config.JwtProperties;
 import ru.kirill.restapi.util.JwtUtil;
-
 import java.util.Date;
 
 @Slf4j
@@ -29,6 +26,7 @@ public class JwtTokenProvider {
         Date expiration = JwtUtil.calculateExpiration(accessKey.getExpirationTime(), accessKey.getExpirationUnit());
         return Jwts
                 .builder()
+                .setId(securityUser.getId().toString())
                 .setSubject(securityUser.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(expiration)
@@ -47,12 +45,8 @@ public class JwtTokenProvider {
         }
     }
 
-    public Authentication getAuthentication(@NonNull String token) {
-        return new UsernamePasswordAuthenticationToken(
-                JwtUtil.extractUsername(token, accessKey.getSecret()),
-                null,
-                JwtUtil.extractAuthorities(token, accessKey.getSecret(), AUTHORITIES_CLAIM)
-        );
+    public JwtAuthentication getAuthentication(@NonNull String token) {
+        return JwtUtil.buildAuthentication(token, accessKey.getSecret(), AUTHORITIES_CLAIM);
     }
 
     public ResponseCookie generateAccessTokenCookie(SecurityUser securityUser) {

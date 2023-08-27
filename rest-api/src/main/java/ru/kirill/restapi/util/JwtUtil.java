@@ -10,6 +10,8 @@ import lombok.experimental.UtilityClass;
 import org.springframework.http.ResponseCookie;
 import org.springframework.web.util.WebUtils;
 import ru.kirill.restapi.enums.Role;
+import ru.kirill.restapi.security.JwtAuthentication;
+import ru.kirill.restapi.security.JwtPrincipal;
 import java.security.Key;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -42,6 +44,10 @@ public class JwtUtil {
                 .toList();
     }
 
+    private static long extractId(@NonNull String token, @NonNull Key key) {
+        return Long.parseLong(getTokenClaims(token, key).getId());
+    }
+
     public static Claims getTokenClaims(@NonNull String token, @NonNull Key key) {
         return getJwtParser(key)
                 .parseClaimsJws(token)
@@ -65,6 +71,18 @@ public class JwtUtil {
         return ResponseCookie
                 .from(cookieName, token)
                 .httpOnly(true)
+                .build();
+    }
+
+    public static JwtAuthentication buildAuthentication(@NonNull String token, @NonNull Key key, @NonNull String authClaim) {
+        return JwtAuthentication
+                .builder()
+                .authenticated(true)
+                .principal(new JwtPrincipal(
+                        JwtUtil.extractId(token, key),
+                        JwtUtil.extractUsername(token, key)
+                ))
+                .roles(JwtUtil.extractAuthorities(token, key, authClaim))
                 .build();
     }
 }
