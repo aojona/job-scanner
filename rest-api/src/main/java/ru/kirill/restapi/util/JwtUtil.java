@@ -9,6 +9,8 @@ import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.ResponseCookie;
 import org.springframework.web.util.WebUtils;
+import ru.kirill.commondto.request.JwtRequest;
+import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.restapi.enums.Role;
 import ru.kirill.restapi.security.JwtAuthentication;
 import ru.kirill.restapi.security.JwtPrincipal;
@@ -83,6 +85,14 @@ public class JwtUtil {
                         JwtUtil.extractUsername(token, key)
                 ))
                 .roles(JwtUtil.extractAuthorities(token, key, authClaim))
+                .build();
+    }
+
+    public static MemberRequest mapToMemberRequest(@NonNull JwtRequest jwtRequest) {
+        return MemberRequest
+                .builder()
+                .username(jwtRequest.getUsername())
+                .rawPassword(jwtRequest.getPassword())
                 .build();
     }
 }
