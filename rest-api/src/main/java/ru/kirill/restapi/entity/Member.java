@@ -17,6 +17,8 @@ public class Member {
 
     private String password;
 
+    private Long telegramChatId;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
