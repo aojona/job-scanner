@@ -11,11 +11,11 @@ import ru.kirill.restapi.enums.Role;
 import java.util.Optional;
 
 @Component
-public class MemberMapper extends Mapper<Member, MemberRequest, MemberResponse> {
+public class MemberConverter extends Mapper<Member, MemberRequest, MemberResponse> {
 
     private final PasswordEncoder passwordEncoder;
 
-    public MemberMapper(ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public MemberConverter(ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         super(modelMapper, Member.class, MemberRequest.class, MemberResponse.class);
         this.passwordEncoder = passwordEncoder;
     }

@@ -11,7 +11,7 @@ import ru.kirill.commondto.response.SubscriptionResponse;
 import ru.kirill.restapi.entity.Subscription;
 import ru.kirill.restapi.exception.MemberNotFoundException;
 import ru.kirill.restapi.exception.SubscriptionNotFoundException;
-import ru.kirill.restapi.mapper.SubscriptionMapper;
+import ru.kirill.restapi.mapper.SubscriptionConverter;
 import ru.kirill.restapi.repository.MemberRepository;
 import ru.kirill.restapi.repository.SubscriptionRepository;
 import java.util.Optional;
@@ -22,13 +22,13 @@ import java.util.Optional;
 public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
-    private final SubscriptionMapper subscriptionMapper;
+    private final SubscriptionConverter subscriptionConverter;
     private final MemberRepository memberRepository;
 
     public SubscriptionResponse get(long id) {
         return subscriptionRepository
                 .findById(id)
-                .map(subscriptionMapper::toDto)
+                .map(subscriptionConverter::toDto)
                 .orElseThrow(() -> new SubscriptionNotFoundException(id));
     }
 
@@ -36,7 +36,7 @@ public class SubscriptionService {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         return subscriptionRepository
                 .findAll(pageRequest)
-                .map(subscriptionMapper::toDto);
+                .map(subscriptionConverter::toDto);
     }
 
     @Transactional
@@ -46,9 +46,9 @@ public class SubscriptionService {
         }
         return Optional
                 .of(subscriptionRequest)
-                .map(subscriptionMapper::toEntity)
+                .map(subscriptionConverter::toEntity)
                 .map(subscriptionRepository::save)
-                .map(subscriptionMapper::toDto)
+                .map(subscriptionConverter::toDto)
                 .orElseThrow();
     }
 
@@ -60,10 +60,10 @@ public class SubscriptionService {
         return subscriptionRepository
                 .findById(id)
                 .map(entity -> {
-                    subscriptionMapper.updateEntity(subscriptionRequest, entity);
+                    subscriptionConverter.updateEntity(subscriptionRequest, entity);
                     return subscriptionRepository.save(entity);
                 })
-                .map(subscriptionMapper::toDto)
+                .map(subscriptionConverter::toDto)
                 .orElseThrow(() -> new SubscriptionNotFoundException(id));
     }
 

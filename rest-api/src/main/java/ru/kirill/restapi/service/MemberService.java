@@ -13,7 +13,7 @@ import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.restapi.security.SecurityUser;
 import ru.kirill.restapi.entity.Member;
 import ru.kirill.restapi.exception.MemberNotFoundException;
-import ru.kirill.restapi.mapper.MemberMapper;
+import ru.kirill.restapi.mapper.MemberConverter;
 import ru.kirill.restapi.repository.MemberRepository;
 import java.util.Optional;
 
@@ -23,12 +23,12 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-    private final MemberMapper memberMapper;
+    private final MemberConverter memberConverter;
 
     public MemberResponse get(long id) {
         return memberRepository
                 .findById(id)
-                .map(memberMapper::toDto)
+                .map(memberConverter::toDto)
                 .orElseThrow(() -> new MemberNotFoundException(id));
     }
 
@@ -36,16 +36,16 @@ public class MemberService implements UserDetailsService {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         return memberRepository
                 .findAll(pageRequest)
-                .map(memberMapper::toDto);
+                .map(memberConverter::toDto);
     }
 
     @Transactional
     public MemberResponse create(MemberRequest memberRequest) {
         return Optional
                 .of(memberRequest)
-                .map(memberMapper::toEntity)
+                .map(memberConverter::toEntity)
                 .map(memberRepository::save)
-                .map(memberMapper::toDto)
+                .map(memberConverter::toDto)
                 .orElseThrow();
     }
 
@@ -54,10 +54,10 @@ public class MemberService implements UserDetailsService {
         return memberRepository
                 .findById(id)
                 .map(entity -> {
-                    memberMapper.updateEntity(memberRequest, entity);
+                    memberConverter.updateEntity(memberRequest, entity);
                     return memberRepository.save(entity);
                 })
-                .map(memberMapper::toDto)
+                .map(memberConverter::toDto)
                 .orElseThrow(() -> new MemberNotFoundException(id));
     }
 

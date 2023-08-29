@@ -8,8 +8,8 @@ import ru.kirill.restapi.entity.Member;
 import ru.kirill.restapi.entity.Subscription;
 
 @Component
-public class SubscriptionMapper extends Mapper<Subscription, SubscriptionRequest, SubscriptionResponse> {
-    public SubscriptionMapper(ModelMapper modelMapper) {
+public class SubscriptionConverter extends Mapper<Subscription, SubscriptionRequest, SubscriptionResponse> {
+    public SubscriptionConverter(ModelMapper modelMapper) {
         super(modelMapper, Subscription.class, SubscriptionRequest.class, SubscriptionResponse.class);
     }
 
