@@ -10,6 +10,9 @@ import ru.kirill.commondto.response.JwtResponse;
 @FeignClient(name = "rest-api", path = "/api")
 public interface RestApiClient {
 
+    @PostMapping("/auth/login")
+    ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest);
+
     @PostMapping("/auth/join")
     ResponseEntity<JwtResponse> join(@RequestBody JwtRequest jwtRequest);
 }
