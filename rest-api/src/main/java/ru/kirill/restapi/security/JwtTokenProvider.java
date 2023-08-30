@@ -57,4 +57,8 @@ public class JwtTokenProvider {
     public String getAccessTokenFromCookies(HttpServletRequest request) {
         return JwtUtil.getTokenFromCookies(request, accessKey.getCookieName());
     }
+
+    public Long getUserId(@NonNull String token) {
+        return JwtUtil.extractId(token, accessKey.getSecret());
+    }
 }

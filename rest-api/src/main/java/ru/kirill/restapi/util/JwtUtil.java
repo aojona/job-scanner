@@ -46,7 +46,7 @@ public class JwtUtil {
                 .toList();
     }
 
-    private static long extractId(@NonNull String token, @NonNull Key key) {
+    public static long extractId(@NonNull String token, @NonNull Key key) {
         return Long.parseLong(getTokenClaims(token, key).getId());
     }
 
@@ -73,6 +73,7 @@ public class JwtUtil {
         return ResponseCookie
                 .from(cookieName, token)
                 .httpOnly(true)
+                .path("/")
                 .build();
     }
 
