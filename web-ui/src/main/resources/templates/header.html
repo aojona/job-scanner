@@ -11,6 +11,12 @@
         <a href="/">
             <img src="/logo_header.svg" alt="logo" class="header_logo"/>
         </a>
+        <ul class="menu">
+            <li th:if = "!${isAuthenticated}"><a href="/auth/join">JOIN</a></li>
+            <li th:if = "!${isAuthenticated}"><a href="/auth/login">LOGIN</a></li>
+            <li th:if = "${isAuthenticated}"><a href="/member" th:text="${username}">PROFILE</a></li>
+            <li th:if = "${isAuthenticated}"><a href="/auth/logout">LOGOUT</a></li>
+        </ul>
     </header>
 </body>
 </html>
