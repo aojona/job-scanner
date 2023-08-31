@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login View</title>
+    <title>Join View</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
 </head>
@@ -19,7 +19,7 @@
             <label for="password"></label>
             <input id="password" type="password" name="password" placeholder="Password" th:field="*{password}"/>
             <br/>
-            <button type="submit">JOIN</button>
+            <button type="submit" class="heroButton">JOIN</button>
             <p>Already a member? <a href="/auth/login">Login</a></p>
         </form>
         <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>

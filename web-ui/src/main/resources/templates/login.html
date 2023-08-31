@@ -9,7 +9,6 @@
 <body>
     <div class="hero">
         <div class="header">
-            <img src="/logo.svg" alt="logo"/>
             <h1>JOB SCANNER</h1>
         </div>
         <form th:action="@{#}" method="post" th:object="${user}">
@@ -19,7 +18,7 @@
             <label for="password"></label>
             <input id="password" type="password" name="password" placeholder="Password" th:field="*{password}"/>
             <br/>
-            <button type="submit">LOGIN</button>
+            <button type="submit" class="heroButton">LOGIN</button>
             <p>Not a member? <a href="/auth/join">Join</a></p>
         </form>
         <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>
