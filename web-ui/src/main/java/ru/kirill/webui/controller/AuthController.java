@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kirill.commondto.request.JwtRequest;
 import ru.kirill.commondto.response.JwtResponse;
 import ru.kirill.webui.feign.RestApiClient;
+import ru.kirill.webui.util.CookieProvider;
 import ru.kirill.webui.util.HttpUtil;
 
 @Controller
@@ -19,6 +20,7 @@ public class AuthController {
     private static final String COOKIE_HEADER = "Set-Cookie";
     private static final String USER = "user";
 
+    private final CookieProvider cookieProvider;
     private final RestApiClient restApiClient;
 
     @GetMapping("/join")
@@ -40,10 +42,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String submitLoginForm(@ModelAttribute(USER) JwtRequest jwtRequest, HttpServletResponse response) {
+    public String submitLoginView(@ModelAttribute(USER) JwtRequest jwtRequest, HttpServletResponse response) {
         ResponseEntity<JwtResponse> responseEntity = restApiClient.login(jwtRequest);
         String tokenCookie = HttpUtil.getHeader(responseEntity, COOKIE_HEADER);
         response.addHeader(COOKIE_HEADER, tokenCookie);
-        return "redirect:/auth/hello";
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        cookieProvider.removeAccessTokenFromCookie(response);
+        return "redirect:/";
     }
 }

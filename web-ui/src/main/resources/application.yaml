@@ -1,0 +1,15 @@
+server:
+  error:
+    include-message: always
+  port: 8081
+
+spring:
+  application:
+    name: web-ui
+
+cookie:
+  remove-access-token:
+    name: access_token
+    value: null
+    path: /
+    expry: 0
