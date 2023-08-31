@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
+</head>
+<body>
+    <header th:fragment="copy (isAuthenticated, username)">
+        <a href="/">
+            <img src="/logo_header.svg" alt="logo" class="header_logo"/>
+        </a>
+    </header>
+</body>
+</html>
