@@ -32,7 +32,7 @@ public class JwtAuthentication implements Authentication {
     }
 
     @Override
-    public Object getPrincipal() {
+    public JwtPrincipal getPrincipal() {
         return principal;
     }
 
