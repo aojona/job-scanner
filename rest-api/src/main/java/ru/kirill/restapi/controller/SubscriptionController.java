@@ -13,6 +13,7 @@ import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.PageResponse;
 import ru.kirill.commondto.response.SubscriptionResponse;
+import ru.kirill.restapi.security.JwtAuthentication;
 import ru.kirill.restapi.service.SubscriptionService;
 
 @CrossOrigin
@@ -65,4 +66,11 @@ public class SubscriptionController {
         subscriptionService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
+        subscriptionService.delete(authentication.getPrincipal().getId(), subscriptionRequest.getText());
+        return ResponseEntity.noContent().build();
+    }
+
 }

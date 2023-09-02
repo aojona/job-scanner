@@ -75,6 +75,11 @@ public class SubscriptionService {
         subscriptionRepository.delete(subscription);
     }
 
+    @Transactional
+    public void delete(long memberId, String text) {
+        subscriptionRepository.deleteByMemberIdAndText(memberId, text);
+    }
+
     private boolean memberIsEmpty(long memberId) {
         return memberRepository
                 .findById(memberId)

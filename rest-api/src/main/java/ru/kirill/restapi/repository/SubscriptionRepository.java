@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.kirill.restapi.entity.Subscription;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
+
+    void deleteByMemberIdAndText(long MemberId, String text);
 }
