@@ -24,6 +24,7 @@
                         <button type="submit" class="addButton">+</button>
                     </span>
                 </form>
+                <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>
             </div>
     </section>
 </body>
