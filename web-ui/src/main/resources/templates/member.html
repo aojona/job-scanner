@@ -19,7 +19,7 @@
                 </div>
                 <form th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
                     <label for="subscription"></label>
-                    <input id="subscription" type="text" name="subscription" th:value="*{text}" placeholder="add vacancy"/>
+                    <input id="subscription" type="text" name="subscription" th:field="*{text}" placeholder="add vacancy"/>
                     <span class="rightContent">
                         <button type="submit" class="addButton">+</button>
                     </span>
