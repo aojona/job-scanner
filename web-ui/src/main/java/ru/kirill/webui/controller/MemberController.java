@@ -3,6 +3,7 @@ package ru.kirill.webui.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,17 +33,15 @@ public class MemberController {
         return "member";
     }
 
-    @PostMapping("/member/addSubscription")
+    @PostMapping("/member")
     public String addSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
-        System.out.println("Add: " + subscription);
+        memberService.addSubscription(subscription);
         return "redirect:/member";
     }
 
-    @PostMapping("/member/removeSubscription")
+    @DeleteMapping("/member")
     public String removeSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
-        System.out.println("REMOVE: " + subscription);
         memberService.deleteSubscription(subscription);
-        System.out.println("REMOVE: " + subscription);
         return "redirect:/member";
     }
 }

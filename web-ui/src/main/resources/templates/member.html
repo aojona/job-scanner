@@ -12,12 +12,12 @@
             <div class = "container">
                 <p>Your subscriptions on vacancies</p>
                 <div th:each="subscription : ${member.subscriptions}">
-                    <form th:action="@{/member/removeSubscription}" method="post" th:object="${subscription}">
+                    <form th:action="@{/member}" th:method="delete" th:object="${subscription}">
                         <input type="hidden" name="text" th:value="*{text}" th:text="*{text}" class = "iin"/>
                         <button type="submit" class="deleteButton">+</button>
                     </form>
                 </div>
-                <form th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
+                <form th:action="@{/member}" method="post" th:object="${subscription}">
                     <label for="subscription"></label>
                     <input id="subscription" type="text" name="subscription" th:field="*{text}" placeholder="add subscription"/>
                     <span class="rightContent">
