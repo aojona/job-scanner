@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.webui.feign.RestApiClient;
 
@@ -23,5 +24,10 @@ public class MemberService {
             model.addAttribute(authAttribute, false);
             model.addAttribute(memberAttribute, memberResponse);
         }
+
+    }
+
+    public void deleteSubscription(SubscriptionRequest subscription) {
+        restApiClient.deleteSubscription(subscription);
     }
 }

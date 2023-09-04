@@ -37,4 +37,12 @@ public class MemberController {
         System.out.println("Add: " + subscription);
         return "redirect:/member";
     }
+
+    @PostMapping("/member/removeSubscription")
+    public String removeSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
+        System.out.println("REMOVE: " + subscription);
+        memberService.deleteSubscription(subscription);
+        System.out.println("REMOVE: " + subscription);
+        return "redirect:/member";
+    }
 }
