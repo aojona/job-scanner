@@ -24,10 +24,13 @@ public class MemberService {
             model.addAttribute(authAttribute, false);
             model.addAttribute(memberAttribute, memberResponse);
         }
-
     }
 
     public void deleteSubscription(SubscriptionRequest subscription) {
         restApiClient.deleteSubscription(subscription);
+    }
+
+    public void addSubscription(SubscriptionRequest subscription) {
+        restApiClient.addSubscription(subscription);
     }
 }

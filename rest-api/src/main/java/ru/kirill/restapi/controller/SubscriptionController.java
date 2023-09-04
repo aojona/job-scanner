@@ -73,4 +73,10 @@ public class SubscriptionController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<?> addSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
+        subscriptionRequest.setMemberId(authentication.getPrincipal().getId());
+        SubscriptionResponse subscriptionResponse = subscriptionService.create(subscriptionRequest);
+        return new ResponseEntity<>(subscriptionResponse, HttpStatus.CREATED);
+    }
 }
