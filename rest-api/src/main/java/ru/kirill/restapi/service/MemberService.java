@@ -1,6 +1,7 @@
 package ru.kirill.restapi.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.response.MemberResponse;
+import ru.kirill.restapi.exception.MemberAlreadyExistException;
 import ru.kirill.restapi.security.SecurityUser;
 import ru.kirill.restapi.entity.Member;
 import ru.kirill.restapi.exception.MemberNotFoundException;
@@ -41,12 +43,17 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public MemberResponse create(MemberRequest memberRequest) {
-        return Optional
-                .of(memberRequest)
-                .map(memberConverter::toEntity)
-                .map(memberRepository::save)
-                .map(memberConverter::toDto)
-                .orElseThrow();
+        try {
+            return Optional
+                    .of(memberRequest)
+                    .map(memberConverter::toEntity)
+                    .map(memberRepository::save)
+                    .map(memberConverter::toDto)
+                    .orElseThrow();
+        } catch (DataAccessException e) {
+            throw new MemberAlreadyExistException();
+        }
+
     }
 
     @Transactional

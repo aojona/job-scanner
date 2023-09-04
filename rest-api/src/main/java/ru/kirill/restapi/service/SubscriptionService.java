@@ -1,6 +1,7 @@
 package ru.kirill.restapi.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.SubscriptionResponse;
 import ru.kirill.restapi.entity.Subscription;
 import ru.kirill.restapi.exception.MemberNotFoundException;
+import ru.kirill.restapi.exception.SubscriptionAlreadyExistException;
 import ru.kirill.restapi.exception.SubscriptionNotFoundException;
 import ru.kirill.restapi.mapper.SubscriptionConverter;
 import ru.kirill.restapi.repository.MemberRepository;
@@ -44,12 +46,17 @@ public class SubscriptionService {
         if (memberIsEmpty(subscriptionRequest.getMemberId())) {
             throw new MemberNotFoundException(subscriptionRequest.getMemberId());
         }
-        return Optional
-                .of(subscriptionRequest)
-                .map(subscriptionConverter::toEntity)
-                .map(subscriptionRepository::save)
-                .map(subscriptionConverter::toDto)
-                .orElseThrow();
+        try {
+            return Optional
+                    .of(subscriptionRequest)
+                    .map(subscriptionConverter::toEntity)
+                    .map(subscriptionRepository::save)
+                    .map(subscriptionConverter::toDto)
+                    .orElseThrow();
+        } catch (DataAccessException e) {
+            throw new SubscriptionAlreadyExistException();
+        }
+
     }
 
     @Transactional
