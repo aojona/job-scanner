@@ -23,7 +23,7 @@ public class ExceptionController {
             String message = HttpStatus.valueOf(e.status()).getReasonPhrase();
             attributes.addAttribute(ERROR_ATTRIBUTE, message);
         } else {
-            String message = exceptionMapper.convert(e).getError();
+            String message = exceptionMapper.convert(e).getMessage();
             attributes.addAttribute(ERROR_ATTRIBUTE, message);
         }
         return "redirect:" + request.getRequestURI();
