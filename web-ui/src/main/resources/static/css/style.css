@@ -1,6 +1,6 @@
 :root {
     --purple-color: #3c4fe0;
-    --white-color: #e1e2ff;
+    --white-color: #d6d7f5;
     --error-color: #e03d7b;
     --light-purple-color: #949cfa;
 }
@@ -159,8 +159,6 @@ header {
 section * {
     margin-right: auto;
     margin-left: auto;
-    /*color: var(--purple-color);*/
-    /*text-align: center;*/
 }
 
 hr {
@@ -169,17 +167,18 @@ hr {
 }
 
 .container {
-    width: 350px;
+    width: 390px;
     margin-right: auto;
     margin-left: auto;
 }
 
 .container * {
     color: var(--purple-color);
+    margin-top: 10px;
 }
 
 .container input {
-    width: 280px;
+    width: 315px;
     margin-top: 0;
     color: var(--purple-color);
     background-color: var(--white-color);
@@ -190,15 +189,11 @@ hr {
     border-bottom: 2px solid var(--error-color);
 }
 
-.container button {
-    margin-top: 0;
-    background-color: var(--white-color);
-    padding: 0 10px;
-    height: 30px;
-    width: 30px;
+.deleteButton, .addButton {
+    padding: 0 20px;
+    background-color: unset;
     font-size: 18px;
     font-weight: 600;
-    /*transform: rotate(45deg);*/
 }
 
 .container input {
@@ -214,7 +209,7 @@ hr {
     color: var(--error-color);
 }
 
-.container button:active {
+.addButton:active {
     transform: scale(1.4);
 }
 
@@ -227,4 +222,15 @@ header a {
 }
 header a img {
     height: 50px;
+}
+
+.deleteButton {
+    padding: 0 20px;
+    margin-right: 0;
+    transform: rotate(45deg);
+    text-align: right;
+}
+
+.deleteButton:active {
+    transform: scale(1.4) rotate(45deg);
 }
