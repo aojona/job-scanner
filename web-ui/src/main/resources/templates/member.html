@@ -9,6 +9,16 @@
 <body>
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, username=${member.username})}"></header>
     <section>
+            <div class = "container">
+                <p>Your subscriptions on vacancies</p>
+                <form th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
+                    <label for="subscription"></label>
+                    <input id="subscription" type="text" name="subscription" th:value="*{text}" placeholder="add vacancy"/>
+                    <span class="rightContent">
+                        <button type="submit" class="addButton">+</button>
+                    </span>
+                </form>
+            </div>
     </section>
 </body>
 </html>
