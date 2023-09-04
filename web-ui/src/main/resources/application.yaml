@@ -6,6 +6,10 @@ server:
 spring:
   application:
     name: web-ui
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 cookie:
   remove-access-token:
