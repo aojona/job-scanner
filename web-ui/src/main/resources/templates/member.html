@@ -10,7 +10,7 @@
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, username=${member.username})}"></header>
     <section>
             <div class = "container">
-                <p>Your subscriptions on vacancies</p>
+                <p class="paragraph">Your subscriptions on vacancies</p>
                 <div th:each="subscription : ${member.subscriptions}">
                     <form th:action="@{/member}" th:method="delete" th:object="${subscription}">
                         <input type="hidden" name="text" th:value="*{text}" th:text="*{text}" class = "iin"/>

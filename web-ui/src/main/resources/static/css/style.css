@@ -24,7 +24,7 @@ body * {
 }
 
 .hero {
-    height: 470px;
+    height: 445px;
     width: 350px;
     background-color: var(--purple-color);
     position: absolute;
@@ -60,7 +60,7 @@ button {
 }
 
 .heroButton {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
     width: 100%;
     height: 50px;
     background-color: var(--white-color);
@@ -76,7 +76,6 @@ button {
 
 
 .heroButton:active {
-    /*background-color: var(--purple-color);*/
     color: var(--white-color);
     outline: 2px dotted var(--purple-color);
     transition:0.1s;
@@ -161,11 +160,6 @@ section * {
     margin-left: auto;
 }
 
-hr {
-    border-top: 2px solid var(--purple-color);
-    width: 300px
-}
-
 .container {
     width: 390px;
     margin-right: auto;
@@ -178,7 +172,7 @@ hr {
 }
 
 .container input {
-    width: 315px;
+    width: 310px;
     margin-top: 0;
     color: var(--purple-color);
     background-color: var(--white-color);
@@ -233,4 +227,10 @@ header a img {
 
 .deleteButton:active {
     transform: scale(1.4) rotate(45deg);
+}
+
+.paragraph {
+    border-bottom: 2px solid var(--purple-color);
+    display: inline-block;
+    padding-bottom: 4px;
 }
