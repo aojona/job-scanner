@@ -25,4 +25,7 @@ public interface RestApiClient {
 
     @DeleteMapping("/subscription/delete")
     ResponseEntity<?> deleteSubscription(@RequestBody SubscriptionRequest subscription);
+
+    @PostMapping("subscription/add")
+    ResponseEntity<?> addSubscription(@RequestBody SubscriptionRequest subscription);
 }
