@@ -1,10 +1,16 @@
 package ru.kirill.restapi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import ru.kirill.restapi.entity.Member;
 
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByUsername(String username);
+
+    @Modifying
+    @Query("UPDATE Member m SET m.telegramChatId = :telegramChatId where m.id = :id")
+    void updateChatId(long id, Long telegramChatId);
 }

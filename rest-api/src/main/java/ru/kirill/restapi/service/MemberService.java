@@ -76,6 +76,11 @@ public class MemberService implements UserDetailsService {
         memberRepository.delete(member);
     }
 
+    @Transactional
+    public void updateChatId(long memberId, Long telegramChatId) {
+        memberRepository.updateChatId(memberId, telegramChatId);
+    }
+
     @Override
     public SecurityUser loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberRepository

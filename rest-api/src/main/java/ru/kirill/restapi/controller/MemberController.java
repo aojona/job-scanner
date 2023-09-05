@@ -8,10 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.commondto.response.PageResponse;
+import ru.kirill.restapi.security.JwtAuthentication;
 import ru.kirill.restapi.service.MemberService;
 
 @CrossOrigin
@@ -62,5 +64,13 @@ public class MemberController {
     public ResponseEntity<?> delete(@PathVariable long id) {
         memberService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/updateChatId")
+    public ResponseEntity<?> updateChatId(JwtAuthentication authentication,
+                                                       @RequestBody ChatRequest chatRequest) {
+        long memberId = authentication.getPrincipal().getId();
+        memberService.updateChatId(memberId, chatRequest.getTelegramChatId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
