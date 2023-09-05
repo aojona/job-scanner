@@ -19,6 +19,7 @@ public class ExceptionController {
 
     @ExceptionHandler
     public String handle(FeignException e, HttpServletRequest request, RedirectAttributes attributes) {
+        System.out.println();
         if (e.contentUTF8().isBlank()) {
             String message = HttpStatus.valueOf(e.status()).getReasonPhrase();
             attributes.addAttribute(ERROR_ATTRIBUTE, message);
@@ -26,6 +27,6 @@ public class ExceptionController {
             String message = exceptionMapper.convert(e).getMessage();
             attributes.addAttribute(ERROR_ATTRIBUTE, message);
         }
-        return "redirect:" + request.getRequestURI();
+        return "redirect:" + request.getRequestURI().replaceAll("(?<=member).*","");
     }
 }

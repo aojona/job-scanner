@@ -33,13 +33,13 @@ public class MemberController {
         return "member";
     }
 
-    @PostMapping("/member")
+    @PostMapping("/member/addSubscription")
     public String addSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
         memberService.addSubscription(subscription);
         return "redirect:/member";
     }
 
-    @DeleteMapping("/member")
+    @DeleteMapping("/member/removeSubscription")
     public String removeSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
         memberService.deleteSubscription(subscription);
         return "redirect:/member";
