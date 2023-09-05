@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.webui.feign.RestApiClient;
@@ -19,6 +20,7 @@ public class MemberController {
     private static final String MEMBER = "member";
     private static final String SUBSCRIPTION = "subscription";
     private static final String IS_AUTHENTICATED = "isAuthenticated";
+    private static final String CHAT = "chat";
 
     private final RestApiClient restApiClient;
 
@@ -32,12 +34,19 @@ public class MemberController {
     public String memberView(Model model) {
         addDefaultMemberAttributes(model);
         model.addAttribute(SUBSCRIPTION, new SubscriptionRequest());
+        model.addAttribute(CHAT, new ChatRequest());
         return "member";
     }
 
     @PostMapping("/member/addSubscription")
     public String addSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
         restApiClient.addSubscription(subscription);
+        return "redirect:/member";
+    }
+
+    @PostMapping("/member/addChatId")
+    public String addTelegramChatId(@ModelAttribute(CHAT) ChatRequest chatRequest) {
+        restApiClient.updateChatId(chatRequest);
         return "redirect:/member";
     }
 
@@ -53,9 +62,8 @@ public class MemberController {
             model.addAttribute(IS_AUTHENTICATED, true);
             model.addAttribute(MEMBER, responseEntity.getBody());
         } else {
-            MemberResponse memberResponse = new MemberResponse();
             model.addAttribute(IS_AUTHENTICATED, false);
-            model.addAttribute(MEMBER, memberResponse);
+            model.addAttribute(MEMBER, new MemberResponse());
         }
     }
 }

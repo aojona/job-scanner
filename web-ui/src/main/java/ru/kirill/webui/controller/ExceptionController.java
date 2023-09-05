@@ -19,7 +19,6 @@ public class ExceptionController {
 
     @ExceptionHandler
     public String handle(FeignException e, HttpServletRequest request, RedirectAttributes attributes) {
-        System.out.println();
         if (e.contentUTF8().isBlank()) {
             String message = HttpStatus.valueOf(e.status()).getReasonPhrase();
             attributes.addAttribute(ERROR_ATTRIBUTE, message);

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.JwtRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.JwtResponse;
@@ -28,4 +29,7 @@ public interface RestApiClient {
 
     @PostMapping("subscription/add")
     ResponseEntity<?> addSubscription(@RequestBody SubscriptionRequest subscription);
+
+    @PostMapping("/member/updateChatId")
+    ResponseEntity<?> updateChatId(@RequestBody ChatRequest chatRequest);
 }
