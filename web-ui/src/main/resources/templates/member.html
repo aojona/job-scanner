@@ -10,6 +10,19 @@
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, username=${member.username})}"></header>
     <section>
             <div class = "container">
+                <p>
+                    To receive new vacancy notifications you need to obtain chat ID via
+                    <a href="https://t.me/job_scanner_bot" class="botLink">@job_scanner_bot</a>
+                    and paste the given one into the form bellow
+                </p>
+                <form th:action="@{/member/addChatId}" method="post" th:object="${chat}">
+                    <label for="chatId"></label>
+                    <input id="chatId" type="number" name="chatId" th:field="*{telegramChatId}" th:placeholder="${member.telegramChatId}">
+                    <span class="rightContent">
+                        <button type="submit" class="addButton">+</button>
+                    </span>
+                </form>
+                <br>
                 <p class="paragraph">Your subscriptions on vacancies</p>
                 <div th:each="subscription : ${member.subscriptions}">
                     <form th:action="@{/member/removeSubscription}" th:method="delete" th:object="${subscription}">
