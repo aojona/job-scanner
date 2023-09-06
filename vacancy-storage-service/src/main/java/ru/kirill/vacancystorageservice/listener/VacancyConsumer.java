@@ -21,7 +21,7 @@ public class VacancyConsumer {
     @RabbitHandler
     public void handleMessage(VacancyResponse vacancyResponse) {
         Vacancy vacancy = vacancyResponse.getVacancy();
-        if (dateAdviser.isNew(vacancy.getPublishedAt()) || vacancyService.get(vacancy.getId()).isEmpty()) {
+        if (dateAdviser.isNew(vacancy.getPublishedAt()) && vacancyService.get(vacancy.getId()).isEmpty()) {
             template.convertAndSend(vacancyResponse);
         }
         vacancyService.saveOrUpdate(vacancy);
