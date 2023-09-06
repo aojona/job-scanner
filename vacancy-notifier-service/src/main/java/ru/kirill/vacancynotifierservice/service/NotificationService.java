@@ -56,7 +56,7 @@ public class NotificationService {
     }
 
     private <V> String getMessageForFieldValue(V v, Field field, String code) {
-        Object[] args = {getFieldValue(v, field)};
+        Object[] args = {getFieldValue(v, field).toString().replaceAll("<[\\w/]*>","")};
         return messageSource.getMessage(code + "." + field.getName(), args, "", locale);
     }
 
