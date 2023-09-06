@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import ru.kirill.commondto.response.LogoUrl;
 import ru.kirill.commondto.response.Notification;
 import ru.kirill.commondto.response.VacancyResponse;
 import java.lang.reflect.Field;
@@ -18,10 +19,12 @@ public class NotificationService {
     private final Locale locale = Locale.getDefault();
 
     public Notification createNotification(VacancyResponse vacancyResponse) {
+        LogoUrl logoUrls = vacancyResponse.getVacancy().getEmployer().getLogoUrls();
         return new Notification(
                 vacancyResponse.getChatId(),
-                createNotificationText(vacancyResponse.getVacancy())
-        );
+                createNotificationText(vacancyResponse.getVacancy()),
+                logoUrls != null ? logoUrls.getOriginal() : null
+                );
     }
 
     public <V> String createNotificationText(V v) {

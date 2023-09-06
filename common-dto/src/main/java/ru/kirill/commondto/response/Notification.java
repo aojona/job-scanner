@@ -11,4 +11,5 @@ public class Notification {
 
     private Long chatId;
     private String text;
+    private String logoUrl;
 }
