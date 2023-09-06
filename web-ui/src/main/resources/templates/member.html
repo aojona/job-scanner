@@ -10,20 +10,22 @@
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, username=${member.username})}"></header>
     <section>
             <div class = "container">
-                <p>
-                    To receive new vacancy notifications you need to obtain chat ID via
-                    <a href="https://t.me/job_scanner_bot" class="botLink">@job_scanner_bot</a>
-                    and paste the given one into the form bellow
-                </p>
+                <h2>Your Profile</h2>
                 <form th:action="@{/member/addChatId}" method="post" th:object="${chat}">
                     <label for="chatId"></label>
-                    <input id="chatId" type="number" name="chatId" th:field="*{telegramChatId}" th:placeholder="${member.telegramChatId}">
+                    <input id="chatId" type="number" name="chatId" th:field="*{telegramChatId}"
+                           th:placeholder="${member.telegramChatId != null} ? ${member.telegramChatId} : 'add chat id'">
                     <span class="rightContent">
                         <button type="submit" class="addButton">+</button>
                     </span>
                 </form>
+                <p>
+                    To receive Telegram notifications about new vacancies, contact
+                    <a href="https://t.me/job_scanner_bot" class="botLink">@job_scanner_bot</a>
+                    and get chat id
+                </p>
                 <br>
-                <p class="paragraph">Your subscriptions on vacancies</p>
+                <h2 class>Your subscriptions</h2>
                 <div th:each="subscription : ${member.subscriptions}">
                     <form th:action="@{/member/removeSubscription}" th:method="delete" th:object="${subscription}">
                         <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
