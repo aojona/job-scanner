@@ -40,7 +40,7 @@ public class TaskConsumer {
         if (accessResponse.isAccess()) {
             searchVacancies(task.getQueryParams())
                     .stream()
-                    .map(vacancy -> new VacancyResponse(task.getChatId(), vacancy))
+                    .map(vacancy -> new VacancyResponse(task.getChatId(), vacancy, task.getQueryParams().getText()))
                     .forEach(template::convertAndSend);
         } else {
             ScheduledFuture<AccessResponse> scheduledTask = createScheduledTask(accessResponse);

@@ -3,7 +3,6 @@ package ru.kirill.commondto.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -17,4 +16,5 @@ public class VacancyResponse implements Serializable {
 
     private Long chatId;
     private Vacancy vacancy;
+    private String queryText;
 }
