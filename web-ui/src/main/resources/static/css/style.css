@@ -1,8 +1,9 @@
 :root {
     --purple-color: #3c4fe0;
     --white-color: #d6d7f5;
-    --error-color: #e03d7b;
+    --red-color: #e03d7b;
     --light-purple-color: #949cfa;
+    --pink-color: #e03d7b;
 }
 
 * {
@@ -101,7 +102,7 @@ img:hover {
 }
 
 #error {
-    color: var(--error-color);
+    color: var(--red-color);
 }
 
 .hero #error {
@@ -161,7 +162,7 @@ section * {
 }
 
 .container {
-    width: 390px;
+    width: 80%;
     margin-right: auto;
     margin-left: auto;
 }
@@ -169,6 +170,7 @@ section * {
 .container * {
     color: var(--purple-color);
     margin-top: 10px;
+    text-align: center;
 }
 
 .container input {
@@ -180,7 +182,7 @@ section * {
 }
 
 .container input:hover {
-    border-bottom: 2px solid var(--error-color);
+    border-bottom: 2px solid var(--red-color);
 }
 
 .deleteButton, .addButton {
@@ -200,7 +202,7 @@ section * {
 }
 
 .container button:hover {
-    color: var(--error-color);
+    color: var(--red-color);
 }
 
 .addButton:active {
@@ -229,8 +231,21 @@ header a img {
     transform: scale(1.4) rotate(45deg);
 }
 
-.paragraph {
-    border-bottom: 2px solid var(--purple-color);
-    display: inline-block;
-    padding-bottom: 4px;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.botLink {
+    text-decoration: none;
+    color: var(--red-color);
+}
+
+.botLink:hover {
+    color: #ff1972;
+}
+
+.container input, .container div {
+    margin-left: 60px;
 }
