@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.redis.core.index.Indexed;
 import ru.kirill.commondto.response.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class VacancyRedis implements Serializable {
     private String id;
     private String name;
     private String url;
+    @Indexed
     private Timestamp publishedAt;
     private Experience experience;
     private Employer employer;
