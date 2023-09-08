@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.index.Indexed;
 import ru.kirill.commondto.response.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Data
 @RedisHash(value = "vacancy")
@@ -22,7 +22,7 @@ public class VacancyRedis implements Serializable {
     private String name;
     private String url;
     @Indexed
-    private Timestamp publishedAt;
+    private LocalDate publishedAt;
     private Experience experience;
     private Employer employer;
     private Employment employment;
