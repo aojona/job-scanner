@@ -24,11 +24,11 @@ public interface RestApiClient {
     @GetMapping("/auth/member")
     ResponseEntity<MemberResponse> getMemberFromToken();
 
-    @DeleteMapping("/subscription/delete")
-    ResponseEntity<?> deleteSubscription(@RequestBody SubscriptionRequest subscription);
+    @PostMapping("/member/addSubscription")
+    ResponseEntity<?> addSubscription(@RequestBody SubscriptionRequest subscriptionRequest);
 
-    @PostMapping("subscription/add")
-    ResponseEntity<?> addSubscription(@RequestBody SubscriptionRequest subscription);
+    @DeleteMapping("/member/removeSubscription")
+    ResponseEntity<?> deleteSubscription(@RequestBody SubscriptionRequest subscriptionRequest);
 
     @PostMapping("/member/updateChatId")
     ResponseEntity<?> updateChatId(@RequestBody ChatRequest chatRequest);
