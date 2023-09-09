@@ -2,9 +2,13 @@ package ru.kirill.restapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode(of = "text")
 public class Subscription {
 
     @Id
@@ -13,6 +17,6 @@ public class Subscription {
 
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    @ManyToMany(mappedBy = "subscriptions")
+    private List<Member> members = new ArrayList<>();
 }
