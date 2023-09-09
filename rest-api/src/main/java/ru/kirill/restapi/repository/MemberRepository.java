@@ -1,10 +1,10 @@
 package ru.kirill.restapi.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ru.kirill.restapi.entity.Member;
-
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -13,4 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member m SET m.telegramChatId = :telegramChatId where m.id = :id")
     void updateChatId(long id, Long telegramChatId);
+
+    @EntityGraph(attributePaths = "subscriptions")
+    Optional<Member> findMemberWithSubscriptionsById(Long id);
 }

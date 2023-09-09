@@ -11,12 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.response.MemberResponse;
+import ru.kirill.restapi.entity.Subscription;
 import ru.kirill.restapi.exception.MemberAlreadyExistException;
+import ru.kirill.restapi.exception.SubscriptionNotFoundException;
+import ru.kirill.restapi.repository.SubscriptionRepository;
 import ru.kirill.restapi.security.SecurityUser;
 import ru.kirill.restapi.entity.Member;
 import ru.kirill.restapi.exception.MemberNotFoundException;
 import ru.kirill.restapi.mapper.MemberConverter;
 import ru.kirill.restapi.repository.MemberRepository;
+import ru.kirill.restapi.util.EntityUtil;
 import java.util.Optional;
 
 @Service
@@ -26,10 +30,11 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final MemberConverter memberConverter;
+    private final SubscriptionRepository subscriptionRepository;
 
     public MemberResponse get(long id) {
         return memberRepository
-                .findById(id)
+                .findMemberWithSubscriptionsById(id)
                 .map(memberConverter::toDto)
                 .orElseThrow(() -> new MemberNotFoundException(id));
     }
@@ -59,7 +64,7 @@ public class MemberService implements UserDetailsService {
     @Transactional
     public MemberResponse update(long id, MemberRequest memberRequest) {
         return memberRepository
-                .findById(id)
+                .findMemberWithSubscriptionsById(id)
                 .map(entity -> {
                     memberConverter.updateEntity(memberRequest, entity);
                     return memberRepository.save(entity);
@@ -71,7 +76,7 @@ public class MemberService implements UserDetailsService {
     @Transactional
     public void delete(long id) {
         Member member = memberRepository
-                .findById(id)
+                .findMemberWithSubscriptionsById(id)
                 .orElseThrow(() -> new MemberNotFoundException(id));
         memberRepository.delete(member);
     }
@@ -87,5 +92,31 @@ public class MemberService implements UserDetailsService {
                 .findByUsername(username)
                 .map(SecurityUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
+    }
+
+    @Transactional
+    public void addSubscription(long id, String text) {
+        Member updatedmember = Optional
+                .of(memberRepository
+                        .findMemberWithSubscriptionsById(id)
+                        .orElseThrow(() -> new MemberNotFoundException(id))
+                )
+                .map(member -> {
+                    Subscription subscription = subscriptionRepository
+                            .findByText(text)
+                            .orElse(EntityUtil.createSubscriptionWithText(text));
+                    member.addSubscription(subscription);
+                    return member;
+                })
+                .orElseThrow();
+        memberRepository.save(updatedmember);
+    }
+
+    @Transactional
+    public void removeSubscription(long id, String text) {
+        Member member = memberRepository.findMemberWithSubscriptionsById(id).orElseThrow(() -> new MemberNotFoundException(id));
+        Subscription subscription = subscriptionRepository.findByText(text).orElseThrow(() -> new SubscriptionNotFoundException(text));
+        member.removeSubscription(subscription);
+        memberRepository.save(member);
     }
 }

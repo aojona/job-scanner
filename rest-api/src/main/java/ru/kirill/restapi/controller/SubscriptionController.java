@@ -13,7 +13,6 @@ import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.PageResponse;
 import ru.kirill.commondto.response.SubscriptionResponse;
-import ru.kirill.restapi.security.JwtAuthentication;
 import ru.kirill.restapi.service.SubscriptionService;
 
 @CrossOrigin
@@ -43,7 +42,7 @@ public class SubscriptionController {
     }
 
     @GetMapping("/{id}")
-    @PostAuthorize("hasAnyAuthority('ADMIN') or authentication.principal.id == #returnObject.body.memberId")
+    @PostAuthorize("hasAnyAuthority('ADMIN') or #returnObject.body.memberIds.contains(authentication.principal.id)")
     @Operation(summary = "Найти подписку")
     public ResponseEntity<SubscriptionResponse> get(@PathVariable long id) {
         SubscriptionResponse subscriptionResponse = subscriptionService.get(id);
@@ -65,18 +64,5 @@ public class SubscriptionController {
     public ResponseEntity<?> delete(@PathVariable long id) {
         subscriptionService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
-        subscriptionService.delete(authentication.getPrincipal().getId(), subscriptionRequest.getText());
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity<?> addSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
-        subscriptionRequest.setMemberId(authentication.getPrincipal().getId());
-        SubscriptionResponse subscriptionResponse = subscriptionService.create(subscriptionRequest);
-        return new ResponseEntity<>(subscriptionResponse, HttpStatus.CREATED);
     }
 }

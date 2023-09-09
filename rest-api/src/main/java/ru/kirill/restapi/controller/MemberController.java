@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.request.PageableRequest;
+import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.commondto.response.PageResponse;
 import ru.kirill.restapi.security.JwtAuthentication;
@@ -71,6 +72,20 @@ public class MemberController {
                                                        @RequestBody ChatRequest chatRequest) {
         long memberId = authentication.getPrincipal().getId();
         memberService.updateChatId(memberId, chatRequest.getTelegramChatId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/addSubscription")
+    public ResponseEntity<?> addSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
+        System.out.println("ADD SUBSCRIPTION");
+        memberService.addSubscription(authentication.getPrincipal().getId(), subscriptionRequest.getText());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/removeSubscription")
+    public ResponseEntity<?> removeSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
+        System.out.println("REMOVE SUBSCRIPTION");
+        memberService.removeSubscription(authentication.getPrincipal().getId(), subscriptionRequest.getText());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -5,6 +5,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class SubscriptionNotFoundException extends ResponseStatusException {
     public SubscriptionNotFoundException(Number id) {
-        super(HttpStatus.NOT_FOUND, "Subscription with id [" + id + "] is not found");
+        super(HttpStatus.NOT_FOUND, "Subscription with id (" + id + ") is not found");
+    }
+
+    public SubscriptionNotFoundException(String text) {
+        super(HttpStatus.NOT_FOUND, "Subscription with text (" + text + ") is not found");
     }
 }
