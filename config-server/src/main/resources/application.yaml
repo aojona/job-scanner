@@ -9,7 +9,5 @@ spring:
       server:
         git:
           uri: https://github.com/aojona-config/job-scanner-properties.git
-          username: aojona-config
-          password: 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
           clone-on-start: true
           basedir: ./${spring.application.name}/src/main/resources/git
