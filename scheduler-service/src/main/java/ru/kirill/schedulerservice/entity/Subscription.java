@@ -3,6 +3,9 @@ package ru.kirill.schedulerservice.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 public class Subscription {
@@ -13,7 +16,6 @@ public class Subscription {
 
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
-
+    @ManyToMany(mappedBy = "subscriptions")
+    private List<Member> members = new ArrayList<>();
 }

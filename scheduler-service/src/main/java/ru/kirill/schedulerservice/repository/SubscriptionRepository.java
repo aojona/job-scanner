@@ -8,6 +8,6 @@ import ru.kirill.schedulerservice.entity.Subscription;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
 
-    @EntityGraph(attributePaths = "member")
+    @EntityGraph(attributePaths = "members")
     Slice<Subscription> findAllBy(Pageable pageable);
 }
