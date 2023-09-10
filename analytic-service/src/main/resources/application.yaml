@@ -11,3 +11,6 @@ spring:
       - rabbitmq
       - redis
       - postgresql
+
+rabbitmq:
+  listen-queue: vacancy-analytics-queue
