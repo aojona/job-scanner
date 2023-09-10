@@ -13,7 +13,8 @@ spring:
 
 rabbitmq:
   exchange: direct-exchange
-  routing-key: scheduled-key
+  vacancy-scan-key: scheduled-key
+  analytics-key: vacancy-analytics-key
 
 scheduler:
   fixed-rate: 30
