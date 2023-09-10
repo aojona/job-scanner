@@ -5,6 +5,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
+import ru.kirill.commondto.response.Notification;
 import ru.kirill.commondto.response.VacancyResponse;
 import ru.kirill.vacancynotifierservice.service.NotificationService;
 
@@ -18,8 +19,15 @@ public class VacancyConsumer {
 
     @RabbitHandler
     public void handleMessage(VacancyResponse vacancyResponse) {
-        if (vacancyResponse.getChatId() != null) {
-            template.convertAndSend(notificationService.createNotification(vacancyResponse));
-        }
+        vacancyResponse
+                .getChatIds()
+                .forEach(chatId -> {
+                    Notification notification = notificationService.createNotification(
+                            chatId,
+                            vacancyResponse.getVacancy(),
+                            vacancyResponse.getQueryText()
+                    );
+                    template.convertAndSend(notification);
+                });
     }
 }

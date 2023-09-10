@@ -6,7 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.kirill.commondto.response.LogoUrl;
 import ru.kirill.commondto.response.Notification;
-import ru.kirill.commondto.response.VacancyResponse;
+import ru.kirill.commondto.response.Vacancy;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Locale;
@@ -18,19 +18,20 @@ public class NotificationService {
     private final MessageSource messageSource;
     private final Locale locale = Locale.getDefault();
 
-    public Notification createNotification(VacancyResponse vacancyResponse) {
-        LogoUrl logoUrls = vacancyResponse.getVacancy().getEmployer().getLogoUrls();
+    public Notification createNotification(Long chatId, Vacancy vacancy, String tag) {
+        LogoUrl logoUrls = vacancy.getEmployer().getLogoUrls();
         return new Notification(
-                vacancyResponse.getChatId(),
-                createNotificationText(vacancyResponse.getVacancy()),
+                chatId,
+                createNotificationText(vacancy, tag),
                 logoUrls != null ? logoUrls.getOriginal() : null
                 );
     }
 
-    public <V> String createNotificationText(V v) {
+    public <V> String createNotificationText(V v, String tag) {
         Class<?> clazz = v.getClass();
         String code = clazz.getSimpleName().toLowerCase();
-        StringBuilder text = new StringBuilder();
+        String tagMessage = messageSource.getMessage("tag", new Object[]{tag}, locale);
+        StringBuilder text = new StringBuilder(tagMessage).append("\n\n");
         appendMessages(text, v, code, clazz);
         return text.toString();
     }
@@ -56,6 +57,7 @@ public class NotificationService {
     }
 
     private <V> String getMessageForFieldValue(V v, Field field, String code) {
+//        Object[] args = {getFieldValue(v, field)};
         Object[] args = {getFieldValue(v, field).toString().replaceAll("<[\\w/]*>","")};
         return messageSource.getMessage(code + "." + field.getName(), args, "", locale);
     }
