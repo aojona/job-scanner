@@ -9,6 +9,8 @@ import ru.kirill.commondto.response.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @RedisHash(value = "vacancy")
@@ -32,4 +34,13 @@ public class VacancyRedis implements Serializable {
     private Snippet snippet;
     @TimeToLive
     private long timeToLive;
+    private Set<String> queries = new HashSet<>();
+
+    public boolean isContainQuery(String query) {
+        return queries.contains(query);
+    }
+
+    public void addQuery(String query) {
+        queries.add(query);
+    }
 }
