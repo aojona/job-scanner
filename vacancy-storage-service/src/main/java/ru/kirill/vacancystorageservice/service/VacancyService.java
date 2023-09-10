@@ -22,7 +22,6 @@ public class VacancyService {
         VacancyRedis vacancyRedis;
         if (vacancyInRedis.isPresent()) {
             vacancyRedis = vacancyInRedis.get();
-            System.out.println(vacancyRedis);
             if (vacancyRedis.isContainQuery(queryText)) {
                 return false;
             }
