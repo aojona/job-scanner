@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import ru.kirill.commondto.response.LogoUrl;
 import ru.kirill.commondto.response.Notification;
 import ru.kirill.commondto.response.Vacancy;
+import ru.kirill.vacancynotifierservice.enums.Currency;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class NotificationService {
                 chatId,
                 createNotificationText(vacancy, tag),
                 logoUrls != null ? logoUrls.getOriginal() : null
-                );
+        );
     }
 
     public <V> String createNotificationText(V v, String tag) {
@@ -43,7 +46,7 @@ public class NotificationService {
                 .filter(field -> getFieldValue(v, field) != null)
                 .forEach(field -> {
                     if (field.getType().getClassLoader() == ClassLoader.getSystemClassLoader()) {
-                        appendMessages(text, getFieldValue(v, field), code + "." + field.getName(), field.getType());
+                        appendMessages(text, getFieldValue(v, field) , code + "." + field.getName(), field.getType());
                     } else {
                         appendMessageIfNotBlank(text, getMessageForFieldValue(v, field, code));
                     }
@@ -57,13 +60,20 @@ public class NotificationService {
     }
 
     private <V> String getMessageForFieldValue(V v, Field field, String code) {
-//        Object[] args = {getFieldValue(v, field)};
         Object[] args = {getFieldValue(v, field).toString().replaceAll("<[\\w/]*>","")};
         return messageSource.getMessage(code + "." + field.getName(), args, "", locale);
     }
 
     @SneakyThrows
     private static <V> Object getFieldValue(V v, Field field) {
-        return field.get(v);
+        Object fieldValue = field.get(v);
+        String fieldName = field.getName();
+        if (fieldName.equals(Currency.fieldName)) {
+            Optional<Currency> currency = Currency.getCurrency(fieldValue.toString());
+            if (currency.isPresent()) {
+                fieldValue = currency.get().getDescription();
+            }
+        }
+        return fieldValue;
     }
 }
