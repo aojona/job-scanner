@@ -30,7 +30,7 @@ public class UpdateHandler {
 
     @SneakyThrows
     private SendMessage handleStartMessage(Chat chat) {
-        Object[] messageArgs = {chat.getUserName(), chat.getId()};
+        Object[] messageArgs = {chat.getFirstName(), chat.getId()};
         String message = messageSource.getMessage(START, messageArgs, LOCALE);
         return MessageUtil.createReply(chat.getId(), message);
     }
