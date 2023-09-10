@@ -5,7 +5,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import ru.kirill.commondto.response.Vacancy;
 import ru.kirill.commondto.response.VacancyResponse;
 import ru.kirill.vacancystorageservice.service.VacancyService;
 
@@ -20,10 +19,10 @@ public class VacancyConsumer {
 
     @RabbitHandler
     public void handleMessage(VacancyResponse vacancyResponse) {
-        Vacancy vacancy = vacancyResponse.getVacancy();
-        if (dateAdviser.isNew(vacancy.getPublishedAt()) && vacancyService.get(vacancy.getId()).isEmpty()) {
+        boolean isSavedOrUpdated = vacancyService.saveOrUpdate(vacancyResponse);
+        boolean isNew = dateAdviser.isNew(vacancyResponse.getVacancy().getPublishedAt());
+        if (isSavedOrUpdated && isNew) {
             template.convertAndSend(vacancyResponse);
         }
-        vacancyService.saveOrUpdate(vacancy);
     }
 }
