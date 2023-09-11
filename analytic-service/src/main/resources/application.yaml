@@ -14,3 +14,6 @@ spring:
 
 rabbitmq:
   listen-queue: vacancy-analytics-queue
+
+page-request:
+  batch-size: 1000

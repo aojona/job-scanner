@@ -2,9 +2,9 @@ package ru.kirill.analyticservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import ru.kirill.analyticservice.entity.VacancyRedis;
 import ru.kirill.analyticservice.repository.VacancyRepository;
@@ -19,11 +19,11 @@ public class VacancyService {
     @Value("${page-request.batch-size}")
     private int batchSize;
 
-    public Slice<VacancyRedis> findVacancies(LocalDate localDate, String query) {
+    public Page<VacancyRedis> findVacancies(LocalDate localDate, String query) {
         return vacancyRepository.findByPublishedAtAndQueries(localDate, query, PageRequest.of(0, batchSize));
     }
 
-    public Slice<VacancyRedis> findVacancies(LocalDate localDate, String query, Pageable pageable) {
+    public Page<VacancyRedis> findVacancies(LocalDate localDate, String query, Pageable pageable) {
         return vacancyRepository.findByPublishedAtAndQueries(localDate, query, pageable);
     }
 }
