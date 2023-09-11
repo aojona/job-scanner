@@ -6,10 +6,15 @@ import ru.kirill.commondto.response.Salary;
 @Data
 public class VacancyAnalyzer {
 
+    private String query;
     private double averageMinSalary;
     private double averageMaxSalary;
     private int numberOfVacancies;
     private int numberOfVacanciesWithSalary;
+
+    public VacancyAnalyzer(String query) {
+        this.query = query;
+    }
 
     public void analyze(Salary salary) {
         numberOfVacancies++;

@@ -16,7 +16,7 @@ public class AnalyticsService {
 
     public VacancyAnalyzer gatherStatistics(String query) {
         LocalDate currentDate = LocalDate.now();
-        VacancyAnalyzer analyzer = new VacancyAnalyzer();
+        VacancyAnalyzer analyzer = new VacancyAnalyzer(query);
         Page<VacancyRedis> vacancies = vacancyService.findVacancies(currentDate, query);
         analyzeData(analyzer, vacancies);
         while (vacancies.hasNext()) {
