@@ -3,17 +3,21 @@ package ru.kirill.analyticservice.util;
 import lombok.Data;
 import ru.kirill.commondto.response.Salary;
 
+import java.time.LocalDate;
+
 @Data
 public class VacancyAnalyzer {
 
-    private String query;
+    private final String query;
+    private final LocalDate date;
     private double averageMinSalary;
     private double averageMaxSalary;
     private int numberOfVacancies;
     private int numberOfVacanciesWithSalary;
 
-    public VacancyAnalyzer(String query) {
+    public VacancyAnalyzer(String query, LocalDate date) {
         this.query = query;
+        this.date = date;
     }
 
     public void analyze(Salary salary) {
