@@ -34,6 +34,7 @@ public class VacancyRedis implements Serializable {
     private Snippet snippet;
     @TimeToLive
     private long timeToLive;
+    @Indexed
     private Set<String> queries = new HashSet<>();
 
     public boolean isContainQuery(String query) {
