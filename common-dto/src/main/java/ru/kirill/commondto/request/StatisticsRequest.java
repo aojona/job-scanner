@@ -1,6 +1,7 @@
 package ru.kirill.commondto.request;
 
 import lombok.Data;
+import java.time.LocalDate;
 
 @Data
 public class StatisticsRequest {
@@ -10,4 +11,5 @@ public class StatisticsRequest {
     private int numberOfVacanciesWithSalary;
     private double averageMinSalary;
     private double averageMaxSalary;
+    private LocalDate date;
 }
