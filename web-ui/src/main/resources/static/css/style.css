@@ -165,6 +165,7 @@ section * {
     width: 85%;
     margin-right: auto;
     margin-left: auto;
+    max-width: 1000px;
 }
 
 .container * {
@@ -243,7 +244,7 @@ input::-webkit-inner-spin-button {
 }
 
 .botLink:hover {
-    color: #ff1972;
+    color: #ff0064;
 }
 
 .container input, .container div {
@@ -252,10 +253,9 @@ input::-webkit-inner-spin-button {
 
 .mainHeader {
     color: var(--red-color);
-    margin-top: 50px;
     text-decoration: underline;
 }
 
 #averageSalaryRangeChart, #vacancyNumberCharts {
-    margin-top: 50px;
+    margin-top: 25px;
 }

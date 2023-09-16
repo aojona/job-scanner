@@ -17,7 +17,7 @@ function createData(firstData, firstLabel, secondData, secondLabel) {
             borderColor: [
                 '#ff69a4',
             ],
-            borderWidth: 1
+            borderWidth: 1.5
         },{
             label: secondLabel,
             data: secondData,
@@ -27,7 +27,7 @@ function createData(firstData, firstLabel, secondData, secondLabel) {
             borderColor: [
                 '#4359ff'
             ],
-            borderWidth: 1
+            borderWidth: 1.5
         },]
     };
 }
