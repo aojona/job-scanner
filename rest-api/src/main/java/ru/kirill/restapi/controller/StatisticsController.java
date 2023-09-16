@@ -19,7 +19,7 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping
-    public ResponseEntity<Content<AverageVacancyStatistics>> getStatisticsForLatestSubscriptions() {
+    public ResponseEntity<Content<AverageVacancyStatistics>> getAverageStatistics() {
         List<AverageVacancyStatistics> statistics = statisticsService.getStatisticsForRandomSubscriptions();
         return new ResponseEntity<>(new Content<>(statistics), HttpStatus.OK);
     }
