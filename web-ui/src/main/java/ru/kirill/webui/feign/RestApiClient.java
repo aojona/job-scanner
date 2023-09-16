@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.JwtRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
-import ru.kirill.commondto.response.JwtResponse;
-import ru.kirill.commondto.response.MemberResponse;
+import ru.kirill.commondto.response.*;
 
 @FeignClient(name = "rest-api", path = "/api")
 public interface RestApiClient {
@@ -32,4 +31,7 @@ public interface RestApiClient {
 
     @PostMapping("/member/updateChatId")
     ResponseEntity<?> updateChatId(@RequestBody ChatRequest chatRequest);
+
+    @GetMapping("/statistics")
+    ResponseEntity<Content<AverageVacancyStatistics>> getAverageStatistics();
 }
