@@ -11,6 +11,8 @@ import ru.kirill.commondto.request.JwtRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.*;
 
+import java.util.List;
+
 @FeignClient(name = "rest-api", path = "/api")
 public interface RestApiClient {
 
@@ -32,6 +34,9 @@ public interface RestApiClient {
     @PostMapping("/member/updateChatId")
     ResponseEntity<?> updateChatId(@RequestBody ChatRequest chatRequest);
 
-    @GetMapping("/statistics")
+    @GetMapping("/statistics/random")
     ResponseEntity<Content<AverageVacancyStatistics>> getAverageStatistics();
+
+    @GetMapping("/statistics/member")
+    ResponseEntity<ContentMap<String, List<StatisticsResponse>>> getMemberStatistics();
 }
