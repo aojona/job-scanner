@@ -26,14 +26,14 @@
                 and get chat id
             </p>
             <br>
-            <h3 class>Your subscriptions</h3>
+            <h3>Your subscriptions</h3>
             <div th:each="subscription : ${member.subscriptions}">
                 <form th:action="@{/member/removeSubscription}" th:method="delete" th:object="${subscription}">
                     <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
                     <button type="submit" class="deleteButton">+</button>
                 </form>
             </div>
-            <form th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
+            <form th:if ="${member.subscriptions.size() < 3}" th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
                 <label for="subscription"></label>
                 <input id="subscription" type="text" name="subscription" th:field="*{text}" placeholder="add subscription"/>
                 <span class="rightContent">
@@ -43,8 +43,9 @@
             <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>
         </div>
     </section>
-    <div class = "container">
+    <div th:if = "${member.subscriptions.size() > 0}" class = "container">
         <br>
+        <h3 class="mainHeader">Vacancy statistics</h3>
         <canvas id="numberOfVacancies"></canvas>
         <canvas id="averageMinSalary"></canvas>
         <canvas id="averageMaxSalary"></canvas>
