@@ -76,5 +76,5 @@ var config = createConfig(data, 'Average salary range for random subscriptions')
 const averageSalaryRangeChart = new Chart(ctx1, config);
 
 data = createData(numberOfVacanciesWithSalary, 'with salary range', numberOfVacancies, 'all')
-config = createConfig(data, 'Vacancy number for random subscriptions')
+config = createConfig(data, 'Number of vacancies for random subscriptions')
 const vacancyNumberCharts = new Chart(ctx2, config);
