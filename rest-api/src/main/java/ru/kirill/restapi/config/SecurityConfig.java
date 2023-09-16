@@ -55,7 +55,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/webjars/**",
                                 "/api/auth/**",
-                                "/error"
+                                "/error",
+                                "/api/statistics"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/member").permitAll()
                         .anyRequest().authenticated()
