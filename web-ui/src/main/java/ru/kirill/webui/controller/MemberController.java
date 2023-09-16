@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
-import ru.kirill.commondto.response.AverageVacancyStatistics;
-import ru.kirill.commondto.response.Content;
-import ru.kirill.commondto.response.MemberResponse;
+import ru.kirill.commondto.response.*;
 import ru.kirill.webui.feign.RestApiClient;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,6 +38,8 @@ public class MemberController {
     @GetMapping("/member")
     public String memberView(Model model) {
         addDefaultMemberAttributes(model);
+        ContentMap<String, List<StatisticsResponse>> statistics = restApiClient.getMemberStatistics().getBody();
+        model.addAttribute(STATISTICS, statistics);
         model.addAttribute(SUBSCRIPTION, new SubscriptionRequest());
         model.addAttribute(CHAT, new ChatRequest());
         return "member";

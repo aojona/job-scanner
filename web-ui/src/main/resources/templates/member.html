@@ -5,42 +5,74 @@
     <title>Member View</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, username=${member.username})}"></header>
     <section>
-            <div class = "container">
-                <h2>Your Profile</h2>
-                <form th:action="@{/member/addChatId}" method="post" th:object="${chat}">
-                    <label for="chatId"></label>
-                    <input id="chatId" type="number" name="chatId" th:field="*{telegramChatId}"
-                           th:placeholder="${member.telegramChatId != null} ? ${member.telegramChatId} : 'add chat id'">
-                    <span class="rightContent">
-                        <button type="submit" class="addButton">+</button>
-                    </span>
+        <div class = "container">
+            <h2 class="mainHeader">Your Profile</h2>
+            <form th:action="@{/member/addChatId}" method="post" th:object="${chat}">
+                <label for="chatId"></label>
+                <input id="chatId" type="number" name="chatId" th:field="*{telegramChatId}"
+                       th:placeholder="${member.telegramChatId != null} ? ${member.telegramChatId} : 'add chat id'">
+                <span class="rightContent">
+                    <button type="submit" class="addButton">+</button>
+                </span>
+            </form>
+            <p>
+                To receive Telegram notifications about new vacancies, contact
+                <a href="https://t.me/job_scanner_bot" class="botLink">@job_scanner_bot</a>
+                and get chat id
+            </p>
+            <br>
+            <h3 class>Your subscriptions</h3>
+            <div th:each="subscription : ${member.subscriptions}">
+                <form th:action="@{/member/removeSubscription}" th:method="delete" th:object="${subscription}">
+                    <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
+                    <button type="submit" class="deleteButton">+</button>
                 </form>
-                <p>
-                    To receive Telegram notifications about new vacancies, contact
-                    <a href="https://t.me/job_scanner_bot" class="botLink">@job_scanner_bot</a>
-                    and get chat id
-                </p>
-                <br>
-                <h2 class>Your subscriptions</h2>
-                <div th:each="subscription : ${member.subscriptions}">
-                    <form th:action="@{/member/removeSubscription}" th:method="delete" th:object="${subscription}">
-                        <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
-                        <button type="submit" class="deleteButton">+</button>
-                    </form>
-                </div>
-                <form th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
-                    <label for="subscription"></label>
-                    <input id="subscription" type="text" name="subscription" th:field="*{text}" placeholder="add subscription"/>
-                    <span class="rightContent">
-                        <button type="submit" class="addButton">+</button>
-                    </span>
-                </form>
-                <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>
             </div>
+            <form th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
+                <label for="subscription"></label>
+                <input id="subscription" type="text" name="subscription" th:field="*{text}" placeholder="add subscription"/>
+                <span class="rightContent">
+                    <button type="submit" class="addButton">+</button>
+                </span>
+            </form>
+            <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>
+        </div>
     </section>
+    <div class = "container">
+        <br>
+        <canvas id="numberOfVacancies"></canvas>
+        <canvas id="averageMinSalary"></canvas>
+        <canvas id="averageMaxSalary"></canvas>
+        <script th:inline = "javascript">
+            var query = [];
+            var allAverageMinSalary = [];
+            var allAverageMaxSalary = [];
+            var allNumberOfVacancies = [];
+            var allDate = [];
+            /*[# th:each="s : ${statistics.content}"]*/
+                query.push([[${s.key}]])
+                var averageMinSalary = [];
+                var averageMaxSalary = [];
+                var numberOfVacancies = [];
+                var date = [];
+                /*[# th:each="v : ${s.value}"]*/
+                    averageMinSalary.push([[${v.averageMinSalary}]]);
+                    averageMaxSalary.push([[${v.averageMaxSalary}]]);
+                    numberOfVacancies.push([[${v.numberOfVacancies}]])
+                    date.push([[${v.date}]]);
+                /*[/]*/
+                allAverageMinSalary.push(averageMinSalary);
+                allAverageMaxSalary.push(averageMaxSalary);
+                allNumberOfVacancies.push(numberOfVacancies);
+                allDate.push(date);
+            /*[/]*/
+        </script>
+        <script src = "/javascript/memberCharts.js"></script>
+    </div>
 </body>
 </html>

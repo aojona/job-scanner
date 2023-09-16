@@ -15,14 +15,12 @@
         <canvas id="vacancyNumberCharts"></canvas>
         <script th:inline = "javascript">
             var query = [];
-
             var averageMinSalary = [];
             var averageMaxSalary = [];
             var numberOfVacancies = [];
             var numberOfVacanciesWithSalary = [];
             /*[# th:each="s : ${statistics.content}"]*/
             query.push([[${s.query}]])
-
             averageMinSalary.push([[${s.averageMinSalary}]]);
             averageMaxSalary.push([[${s.averageMaxSalary}]]);
             numberOfVacancies.push([[${s.numberOfVacancies}]])
