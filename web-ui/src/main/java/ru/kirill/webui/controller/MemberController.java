@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kirill.commondto.request.ChatRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
+import ru.kirill.commondto.response.AverageVacancyStatistics;
+import ru.kirill.commondto.response.Content;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.webui.feign.RestApiClient;
 
@@ -21,12 +23,15 @@ public class MemberController {
     private static final String SUBSCRIPTION = "subscription";
     private static final String IS_AUTHENTICATED = "isAuthenticated";
     private static final String CHAT = "chat";
+    private static final String STATISTICS = "statistics";
 
     private final RestApiClient restApiClient;
 
     @GetMapping("/")
     public String homeView(Model model) {
         addDefaultMemberAttributes(model);
+        Content<AverageVacancyStatistics> statistics = restApiClient.getAverageStatistics().getBody();
+        model.addAttribute(STATISTICS, statistics);
         return "index";
     }
 

@@ -5,8 +5,31 @@
     <title>Job Scanner</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, username=${member.username})}"></header>
+    <div class = "container">
+        <h2 class="mainHeader">Vacancy statistics</h2>
+        <canvas id="averageSalaryRangeChart"></canvas>
+        <canvas id="vacancyNumberCharts"></canvas>
+        <script th:inline = "javascript">
+            var query = [];
+
+            var averageMinSalary = [];
+            var averageMaxSalary = [];
+            var numberOfVacancies = [];
+            var numberOfVacanciesWithSalary = [];
+            /*[# th:each="s : ${statistics.content}"]*/
+            query.push([[${s.query}]])
+
+            averageMinSalary.push([[${s.averageMinSalary}]]);
+            averageMaxSalary.push([[${s.averageMaxSalary}]]);
+            numberOfVacancies.push([[${s.numberOfVacancies}]])
+            numberOfVacanciesWithSalary.push([[${s.numberOfVacanciesWithSalary}]]);
+            /*[/]*/
+        </script>
+        <script src = "/javascript/mainCharts.js"></script>
+    </div>
 </body>
 </html>
