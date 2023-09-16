@@ -56,7 +56,7 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/api/auth/**",
                                 "/error",
-                                "/api/statistics"
+                                "/api/statistics/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/member").permitAll()
                         .anyRequest().authenticated()
