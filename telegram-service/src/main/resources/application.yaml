@@ -17,3 +17,9 @@ telegram:
     name: ${BOT_NAME:@job_scanner_bot}
     token: ${BOT_TOKEN:6419123727:AAHYICyzL27LoPyfGBwYQn1EpsTjlOrDpgg}
 
+rate-limiter:
+  bucket-name: "telegram-service"
+
+executors:
+  threads:
+    scheduled: 1

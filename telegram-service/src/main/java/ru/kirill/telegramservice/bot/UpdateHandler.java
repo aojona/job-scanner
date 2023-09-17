@@ -1,7 +1,6 @@
 package ru.kirill.telegramservice.bot;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -28,7 +27,6 @@ public class UpdateHandler {
         };
     }
 
-    @SneakyThrows
     private SendMessage handleStartMessage(Chat chat) {
         Object[] messageArgs = {chat.getFirstName(), chat.getId()};
         String message = messageSource.getMessage(START, messageArgs, LOCALE);

@@ -1,7 +1,6 @@
 package ru.kirill.telegramservice.bot;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -28,7 +27,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     @Override
-    @SneakyThrows
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             SendMessage reply = updateHandler.handleMessage(update.getMessage());
@@ -36,27 +34,19 @@ public class TelegramBot extends TelegramLongPollingBot {
                 try {
                     execute(reply);
                 } catch (TelegramApiException e) {
-                    log.error("Error while sending message with image to chat with id = " + reply.getChatId());
+                    log.error("Sending message exception for chat id = " + reply.getChatId());
                 }
             }
         }
     }
 
-    public void sendNotification(Notification notification) {
+    public void sendNotification(Notification notification) throws TelegramApiException {
         if (notification.getLogoUrl() != null && !notification.getLogoUrl().contains("bmp")) {
             SendPhoto reply = MessageUtil.createReply(notification.getChatId(), notification.getText(), notification.getLogoUrl());
-            try {
-                execute(reply);
-            } catch (TelegramApiException e) {
-                log.error("Error while sending message with image to chat with id = " + notification.getChatId());
-            }
+            execute(reply);
         } else {
             SendMessage reply = MessageUtil.createReply(notification.getChatId(), notification.getText());
-            try {
-                execute(reply);
-            } catch (TelegramApiException e) {
-                log.error("Error while sending text message to chat with id = " + notification.getChatId());
-            }
+            execute(reply);
         }
     }
 }
