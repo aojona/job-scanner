@@ -2,6 +2,7 @@ package ru.kirill.commondto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import java.util.List;
 
 @Data
 @Schema(description = "Подписка")
@@ -11,5 +12,5 @@ public class SubscriptionResponse {
     private String text;
 
     @Schema(description = "id пользователя", example = "1")
-    private Long memberId;
+    private List<Long> memberIds;
 }
