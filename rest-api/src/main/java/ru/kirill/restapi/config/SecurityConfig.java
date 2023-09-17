@@ -58,7 +58,7 @@ public class SecurityConfig {
                                 "/error",
                                 "/api/statistics/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/member").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/member").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())

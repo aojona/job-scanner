@@ -1,14 +1,11 @@
 package ru.kirill.restapi.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
-public class SubscriptionNotFoundException extends ResponseStatusException {
+public class SubscriptionNotFoundException extends ConflictException {
     public SubscriptionNotFoundException(Number id) {
-        super(HttpStatus.NOT_FOUND, "Subscription with id (" + id + ") is not found");
+        super("Subscription with id (" + id + ") is not found");
     }
 
     public SubscriptionNotFoundException(String text) {
-        super(HttpStatus.NOT_FOUND, "Subscription with text (" + text + ") is not found");
+        super("Subscription with text (" + text + ") is not found");
     }
 }

@@ -2,8 +2,12 @@ package ru.kirill.restapi.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import ru.kirill.commondto.response.ExceptionResponse;
+
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class ResponseUtil {
@@ -13,7 +17,22 @@ public class ResponseUtil {
                 .builder()
                 .timestamp(LocalDateTime.now())
                 .status(errorCode)
-                .error(e.getMessage())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+    }
+
+    public static ExceptionResponse createExceptionResponse(MethodArgumentNotValidException e, HttpServletRequest request) {
+        return ExceptionResponse
+                .builder()
+                .timestamp(LocalDateTime.now())
+                .status(e.getStatusCode().value())
+                .message(e
+                        .getFieldErrors()
+                        .stream()
+                        .map(FieldError::getDefaultMessage)
+                        .collect(Collectors.joining("; \n"))
+                )
                 .path(request.getRequestURI())
                 .build();
     }

@@ -19,15 +19,17 @@ public class ExceptionController {
 
     private static final String JWT_EXPIRED_ERROR_PATTERN = "JWT expired";
     private static final String JWT_EXPIRED_ERROR_MESSAGE = "Please, login to continue";
+    private static final String LOGIN_ERROR_MESSAGE = "Bad credentials";
 
     private final FeignExceptionMapper exceptionMapper;
     private final CookieProvider cookieProvider;
 
     @ExceptionHandler
     public String handle(FeignException e, HttpServletRequest request, RedirectAttributes attributes, HttpServletResponse response) {
-        System.out.println();
         if (e.contentUTF8().isBlank()) {
-            String message = HttpStatus.valueOf(e.status()).getReasonPhrase();
+            String message = e.status() == 401
+                    ? LOGIN_ERROR_MESSAGE
+                    : HttpStatus.valueOf(e.status()).getReasonPhrase();
             attributes.addAttribute(ERROR_ATTRIBUTE, message);
         } else {
             String message = exceptionMapper.convert(e).getMessage();
