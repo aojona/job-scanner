@@ -28,11 +28,6 @@ public class VacancyConsumer {
                             vacancyResponse.getQueryText()
                     );
                     template.convertAndSend(notification);
-                    try {
-                        Thread.sleep(20_000L);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 });
     }
 }
