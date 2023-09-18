@@ -1,7 +1,6 @@
 package ru.kirill.webui.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +21,9 @@ public class MemberController {
     private static final String MEMBER = "member";
     private static final String SUBSCRIPTION = "subscription";
     private static final String IS_AUTHENTICATED = "isAuthenticated";
-    private static final String CHAT = "chat";
+    private static final String IS_ADMIN = "isAdmin";
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String CHAT_ID = "chat";
     private static final String STATISTICS = "statistics";
 
     private final RestApiClient restApiClient;
@@ -41,7 +42,7 @@ public class MemberController {
         ContentMap<String, List<StatisticsResponse>> statistics = restApiClient.getMemberStatistics().getBody();
         model.addAttribute(STATISTICS, statistics);
         model.addAttribute(SUBSCRIPTION, new SubscriptionRequest());
-        model.addAttribute(CHAT, new ChatRequest());
+        model.addAttribute(CHAT_ID, new ChatRequest());
         return "member";
     }
 
@@ -52,7 +53,7 @@ public class MemberController {
     }
 
     @PostMapping("/member/addChatId")
-    public String addTelegramChatId(@ModelAttribute(CHAT) ChatRequest chatRequest) {
+    public String addTelegramChatId(@ModelAttribute(CHAT_ID) ChatRequest chatRequest) {
         restApiClient.updateChatId(chatRequest);
         return "redirect:/member";
     }
@@ -63,13 +64,21 @@ public class MemberController {
         return "redirect:/member";
     }
 
+    @GetMapping("/admin")
+    public String controlView(Model model) {
+        addDefaultMemberAttributes(model);
+        return "admin";
+    }
+
     private void addDefaultMemberAttributes(Model model) {
-        ResponseEntity<MemberResponse> responseEntity = restApiClient.getMemberFromToken();
-        if (responseEntity.hasBody()) {
+        MemberResponse member = restApiClient.getMemberFromToken().getBody();
+        if (member != null) {
             model.addAttribute(IS_AUTHENTICATED, true);
-            model.addAttribute(MEMBER, responseEntity.getBody());
+            model.addAttribute(IS_ADMIN, member.getRole().equals(ADMIN_ROLE));
+            model.addAttribute(MEMBER, member);
         } else {
             model.addAttribute(IS_AUTHENTICATED, false);
+            model.addAttribute(IS_ADMIN, false);
             model.addAttribute(MEMBER, new MemberResponse());
         }
     }

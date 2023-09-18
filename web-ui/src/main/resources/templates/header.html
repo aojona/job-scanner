@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
 </head>
 <body>
-    <header th:fragment="copy (isAuthenticated, username)">
+    <header th:fragment="copy (isAuthenticated, isAdmin, username)">
         <a href="/">
             <img src="/logo_header.svg" alt="logo" class="header_logo"/>
         </a>
@@ -15,6 +15,7 @@
             <li th:if = "!${isAuthenticated}"><a href="/auth/join">JOIN</a></li>
             <li th:if = "!${isAuthenticated}"><a href="/auth/login">LOGIN</a></li>
             <li th:if = "${isAuthenticated}"><a href="/member" th:text="${username}">PROFILE</a></li>
+            <li th:if = "${isAdmin}"><a href="/admin">CONTROL</a></li>
             <li th:if = "${isAuthenticated}"><a href="/auth/logout">LOGOUT</a></li>
         </ul>
     </header>
