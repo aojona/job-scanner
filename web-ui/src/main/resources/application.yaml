@@ -17,3 +17,8 @@ cookie:
     value: null
     path: /
     expry: 0
+
+page:
+  request:
+    pageNumber: 0
+    pageSize: 3
