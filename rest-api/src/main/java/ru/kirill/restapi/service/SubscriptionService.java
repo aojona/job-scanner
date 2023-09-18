@@ -1,8 +1,8 @@
 package ru.kirill.restapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.request.PageableRequest;
@@ -29,10 +29,10 @@ public class SubscriptionService {
                 .orElseThrow(() -> new SubscriptionNotFoundException(id));
     }
 
-    public Page<SubscriptionResponse> getAll(PageableRequest pageable) {
+    public Slice<SubscriptionResponse> getAll(PageableRequest pageable) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         return subscriptionRepository
-                .findAll(pageRequest)
+                .findAllSlice(pageRequest)
                 .map(subscriptionConverter::toDto);
     }
 

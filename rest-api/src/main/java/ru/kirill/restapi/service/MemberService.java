@@ -2,8 +2,8 @@ package ru.kirill.restapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -39,10 +39,10 @@ public class MemberService implements UserDetailsService {
                 .orElseThrow(() -> new MemberNotFoundException(id));
     }
 
-    public Page<MemberResponse> getAll(PageableRequest pageable) {
+    public Slice<MemberResponse> getAll(PageableRequest pageable) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
         return memberRepository
-                .findAll(pageRequest)
+                .findAllSlice(pageRequest)
                 .map(memberConverter::toDto);
     }
 

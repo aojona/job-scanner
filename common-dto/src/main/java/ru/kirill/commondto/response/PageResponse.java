@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
+
 import java.util.List;
 
 @Data
@@ -17,9 +18,8 @@ public class PageResponse<D> {
 
     @Schema(description = "Информация о странице с контентом")
     private Metadata metadata;
-
-    public static <D> PageResponse<D> of(Page<D> page) {
-        return new PageResponse<>(page.getContent(), getMetadata(page));
+    public static <D> PageResponse<D> of(Slice<D> slice) {
+        return new PageResponse<>(slice.getContent(), getMetadata(slice));
     }
 
     @Data
@@ -33,16 +33,18 @@ public class PageResponse<D> {
         @Schema(description = "Размер страницы", example = "1")
         private int size;
 
-        @Schema(description = "Общее число результатов", example = "10")
-        private long totalElements;
+        private boolean hasPrevious;
+
+        private boolean hasNext;
     }
 
-    private static <D> Metadata getMetadata(Page<D> page) {
+    private static <D> Metadata getMetadata(Slice<D> slice) {
         return Metadata
                 .builder()
-                .number(page.getNumber())
-                .size(page.getSize())
-                .totalElements(page.getTotalElements())
+                .number(slice.getNumber())
+                .size(slice.getSize())
+                .hasPrevious(slice.hasPrevious())
+                .hasNext(slice.hasNext())
                 .build();
     }
 }
