@@ -1,6 +1,7 @@
 package ru.kirill.restapi.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<JwtResponse> join(@RequestBody JwtRequest jwtRequest) {
+    public ResponseEntity<JwtResponse> join(@RequestBody @Valid JwtRequest jwtRequest) {
         memberService.create(JwtUtil.mapToMemberRequest(jwtRequest));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -3,6 +3,7 @@ package ru.kirill.restapi.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class SubscriptionController {
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN') or authentication.principal.id == #subscriptionRequest.memberId")
     @Operation(summary = "Добавить подписку")
-    public ResponseEntity<SubscriptionResponse> create(@RequestBody SubscriptionRequest subscriptionRequest) {
+    public ResponseEntity<SubscriptionResponse> create(@RequestBody @Valid SubscriptionRequest subscriptionRequest) {
         SubscriptionResponse subscriptionResponse = subscriptionService.create(subscriptionRequest);
         return new ResponseEntity<>(subscriptionResponse, HttpStatus.CREATED);
     }
@@ -53,7 +54,7 @@ public class SubscriptionController {
     @PreAuthorize("hasAnyAuthority('ADMIN') or authentication.principal.id == #subscriptionRequest.memberId")
     @Operation(summary = "Обновить подписку")
     public ResponseEntity<SubscriptionResponse> update(@PathVariable long id,
-                                                  @RequestBody SubscriptionRequest subscriptionRequest) {
+                                                  @RequestBody @Valid SubscriptionRequest subscriptionRequest) {
         SubscriptionResponse subscriptionResponse = subscriptionService.update(id, subscriptionRequest);
         return new ResponseEntity<>(subscriptionResponse, HttpStatus.OK);
     }

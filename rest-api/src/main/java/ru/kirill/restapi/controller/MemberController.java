@@ -3,6 +3,7 @@ package ru.kirill.restapi.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class MemberController {
 
     @PostMapping
     @Operation(summary = "Зарегистрировать нового пользователя")
-    public ResponseEntity<MemberResponse> create(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<MemberResponse> create(@RequestBody @Valid MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.create(memberRequest);
         return new ResponseEntity<>(memberResponse, HttpStatus.CREATED);
     }
@@ -54,7 +55,7 @@ public class MemberController {
     @PreAuthorize("hasAnyAuthority('ADMIN') or authentication.principal.id == #id")
     @Operation(summary = "Обновить пользователя")
     public ResponseEntity<MemberResponse> update(@PathVariable long id,
-                                                  @RequestBody MemberRequest memberRequest) {
+                                                  @RequestBody @Valid MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.update(id, memberRequest);
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
@@ -76,13 +77,13 @@ public class MemberController {
     }
 
     @PostMapping("/addSubscription")
-    public ResponseEntity<?> addSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
+    public ResponseEntity<?> addSubscription(JwtAuthentication authentication, @RequestBody @Valid SubscriptionRequest subscriptionRequest) {
         memberService.addSubscription(authentication.getPrincipal().getId(), subscriptionRequest.getText());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/removeSubscription")
-    public ResponseEntity<?> removeSubscription(JwtAuthentication authentication, @RequestBody SubscriptionRequest subscriptionRequest) {
+    public ResponseEntity<?> removeSubscription(JwtAuthentication authentication, @RequestBody @Valid SubscriptionRequest subscriptionRequest) {
         memberService.removeSubscription(authentication.getPrincipal().getId(), subscriptionRequest.getText());
         return new ResponseEntity<>(HttpStatus.OK);
     }
