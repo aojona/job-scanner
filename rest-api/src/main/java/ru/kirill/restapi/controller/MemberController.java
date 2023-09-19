@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.kirill.commondto.request.ChatRequest;
@@ -86,5 +87,12 @@ public class MemberController {
     public ResponseEntity<?> removeSubscription(JwtAuthentication authentication, @RequestBody @Valid SubscriptionRequest subscriptionRequest) {
         memberService.removeSubscription(authentication.getPrincipal().getId(), subscriptionRequest.getText());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    @PostAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> delete(@RequestBody MemberRequest memberRequest) {
+        memberService.delete(memberRequest.getUsername());
+        return ResponseEntity.noContent().build();
     }
 }

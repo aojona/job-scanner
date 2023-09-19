@@ -12,6 +12,8 @@ import ru.kirill.commondto.request.MemberRequest;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.restapi.entity.Subscription;
+import ru.kirill.restapi.enums.Role;
+import ru.kirill.restapi.exception.AdminDeleteException;
 import ru.kirill.restapi.exception.MemberAlreadyExistException;
 import ru.kirill.restapi.exception.SubscriptionNotFoundException;
 import ru.kirill.restapi.repository.SubscriptionRepository;
@@ -118,5 +120,16 @@ public class MemberService implements UserDetailsService {
         Subscription subscription = subscriptionRepository.findByText(text).orElseThrow(() -> new SubscriptionNotFoundException(text));
         member.removeSubscription(subscription);
         memberRepository.save(member);
+    }
+
+    @Transactional
+    public void delete(String username) {
+        Member member = memberRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new MemberNotFoundException(username));
+        if (member.getRole() == Role.ADMIN) {
+            throw new AdminDeleteException();
+        }
+        memberRepository.delete(member);
     }
 }
