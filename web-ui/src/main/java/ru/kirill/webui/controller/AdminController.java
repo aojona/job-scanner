@@ -1,16 +1,14 @@
-package ru.kirill.webui.config;
+package ru.kirill.webui.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.PageResponse;
 import ru.kirill.commondto.response.SubscriptionResponse;
+import ru.kirill.webui.config.PageRequestProperties;
 import ru.kirill.webui.feign.RestApiClient;
 import ru.kirill.webui.util.AttributesProvider;
 
