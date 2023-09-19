@@ -11,6 +11,13 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
+      - id: web-ui
+        uri: lb://web-ui
+        predicates:
+        - Path=/**
+        - NotPath=/v3/**
+        filters:
+        - RewritePath=/web-ui/(?<path>.*), /$\{path}
       - id: openapi
         uri: http://localhost:${server.port}
         predicates:
