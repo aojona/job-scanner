@@ -18,7 +18,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
     @Query("SELECT s FROM Subscription s ORDER BY RANDOM()")
     List<Subscription> findRandomSubscriptions(Pageable pageable);
 
-    @Query("SELECT s FROM Subscription s")
+    @Query("SELECT s FROM Subscription s ORDER BY s.text")
     @EntityGraph(attributePaths = "members")
     Slice<Subscription> findAllSlice(Pageable pageable);
 }

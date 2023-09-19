@@ -20,7 +20,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @EntityGraph(attributePaths = "subscriptions")
     Optional<Member> findMemberWithSubscriptionsById(Long id);
 
-    @Query("SELECT m FROM Member m")
+    @Query("SELECT m FROM Member m ORDER BY m.username")
     @EntityGraph(attributePaths = "subscriptions")
     Slice<Member> findAllSlice(Pageable pageable);
 }
