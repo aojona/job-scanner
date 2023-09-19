@@ -41,4 +41,7 @@ public interface RestApiClient {
 
     @GetMapping("/subscription")
     ResponseEntity<PageResponse<SubscriptionResponse>> getAll(@SpringQueryMap PageableRequest pageable);
+
+    @DeleteMapping("/subscription/delete")
+    ResponseEntity<?> deleteSubscription(@RequestBody SubscriptionRequest subscription);
 }

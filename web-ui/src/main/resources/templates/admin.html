@@ -15,6 +15,7 @@
             <div th:each="subscription : ${subscription_page.content}">
                 <form th:action="@{/admin/deleteSubscription}" th:method="delete" th:object="${subscription}">
                     <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
+                    <button type="submit" class="deleteButton">+</button>
                 </form>
             </div>
             <div class="pageSelect">

@@ -3,7 +3,9 @@ package ru.kirill.webui.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
@@ -33,5 +35,11 @@ public class AdminController {
         model.addAttribute(SUBSCRIPTION_PAGE, response);
         model.addAttribute(SUBSCRIPTION, new SubscriptionRequest());
         return "admin";
+    }
+
+    @DeleteMapping("/admin/deleteSubscription")
+    public String deleteSubscription(@ModelAttribute(SUBSCRIPTION) SubscriptionRequest subscription) {
+        restApiClient.deleteSubscription(subscription);
+        return "redirect:/admin";
     }
 }
