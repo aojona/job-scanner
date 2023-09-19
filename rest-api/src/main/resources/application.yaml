@@ -21,3 +21,8 @@ jwt:
     expiration-time: 24
     expiration-unit: hours
     cookie-name: access_token
+
+search:
+  page: 0
+  size: 7
+  range: 14

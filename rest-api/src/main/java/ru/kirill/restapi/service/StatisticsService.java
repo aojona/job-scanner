@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kirill.commondto.response.AverageVacancyStatistics;
 import ru.kirill.commondto.response.StatisticsResponse;
+import ru.kirill.restapi.config.SearchProperties;
 import ru.kirill.restapi.entity.Subscription;
 import ru.kirill.restapi.exception.MemberNotFoundException;
 import ru.kirill.restapi.mapper.StatisticsConverter;
@@ -27,11 +28,15 @@ public class StatisticsService {
     private final StatisticsRepository statisticsRepository;
     private final MemberRepository memberRepository;
     private final StatisticsConverter statisticsConverter;
+    private final SearchProperties searchProperties;
 
     public List<AverageVacancyStatistics> getStatisticsForRandomSubscriptions() {
         return statisticsRepository
                 .findAverageStatisticsWhereQueryIn(subscriptionRepository
-                        .findRandomSubscriptions(PageRequest.of(0,7))
+                        .findRandomSubscriptions(PageRequest.of(
+                                searchProperties.page(),
+                                searchProperties.size()
+                        ))
                         .stream()
                         .map(Subscription::getText)
                         .toList()
@@ -41,7 +46,7 @@ public class StatisticsService {
     }
 
     public Map<String, List<StatisticsResponse>> getStatisticForMemberSubscriptions(Long id) {
-        LocalDate limitDate = LocalDate.now().minusDays(14);
+        LocalDate limitDate = LocalDate.now().minusDays(searchProperties.range());
         return memberRepository
                 .findMemberWithSubscriptionsById(id)
                 .orElseThrow(() -> new MemberNotFoundException(id))
