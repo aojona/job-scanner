@@ -4,10 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kirill.commondto.request.ChatRequest;
-import ru.kirill.commondto.request.JwtRequest;
-import ru.kirill.commondto.request.PageableRequest;
-import ru.kirill.commondto.request.SubscriptionRequest;
+import ru.kirill.commondto.request.*;
 import ru.kirill.commondto.response.*;
 
 import java.util.List;
@@ -40,8 +37,14 @@ public interface RestApiClient {
     ResponseEntity<ContentMap<String, List<StatisticsResponse>>> getMemberStatistics();
 
     @GetMapping("/subscription")
-    ResponseEntity<PageResponse<SubscriptionResponse>> getAll(@SpringQueryMap PageableRequest pageable);
+    ResponseEntity<PageResponse<SubscriptionResponse>> getSubscriptions(@SpringQueryMap PageableRequest pageable);
 
     @DeleteMapping("/subscription/delete")
     ResponseEntity<?> deleteSubscription(@RequestBody SubscriptionRequest subscription);
+
+    @GetMapping("/member")
+    ResponseEntity<PageResponse<MemberResponse>> getMembers(@SpringQueryMap PageableRequest pageable);
+
+    @DeleteMapping("/member/delete")
+    ResponseEntity<?> deleteMember(@RequestBody MemberRequest member);
 }

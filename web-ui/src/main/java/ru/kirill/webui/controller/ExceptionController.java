@@ -40,6 +40,9 @@ public class ExceptionController {
             }
             attributes.addAttribute(ERROR_ATTRIBUTE, message);
         }
-        return "redirect:" + request.getRequestURI().replaceAll("(?<=member).*","");
+        return "redirect:" + request
+                .getRequestURI()
+                .replaceAll("(?<=member).*","")
+                .replaceAll("(?<=admin).*","");
     }
 }
