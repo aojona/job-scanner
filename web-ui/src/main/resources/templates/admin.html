@@ -11,7 +11,20 @@
     <header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, isAdmin=${isAdmin}, username=${member.username})}"></header>
     <section>
         <div class = "container">
-            <h2 class="mainHeader">Your Profile</h2>
+            <h2 class="mainHeader">Subscriptions</h2>
+            <div th:each="subscription : ${subscription_page.content}">
+                <form th:action="@{/admin/deleteSubscription}" th:method="delete" th:object="${subscription}">
+                    <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
+                </form>
+            </div>
+            <div class="pageSelect">
+                <a th:if="${subscription_page.metadata.hasPrevious}" class="leftArrow"
+                   th:href="@{/admin(subscriptionPage=${subscription_page.metadata.number} - 1)}">&#10140;
+                </a>
+                <a th:if="${subscription_page.metadata.hasNext}" class="rightArrow"
+                   th:href="@{/admin(subscriptionPage=${subscription_page.metadata.number} + 1)}">&#10140;
+                </a>
+            </div>
         </div>
     </section>
 </body>
