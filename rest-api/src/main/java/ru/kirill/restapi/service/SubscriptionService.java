@@ -65,4 +65,12 @@ public class SubscriptionService {
                 .orElseThrow(() -> new SubscriptionNotFoundException(id));
         subscriptionRepository.delete(subscription);
     }
+
+    @Transactional
+    public void delete(String text) {
+        Subscription subscription = subscriptionRepository
+                .findByText(text)
+                .orElseThrow(() -> new SubscriptionNotFoundException(text));
+        subscriptionRepository.delete(subscription);
+    }
 }

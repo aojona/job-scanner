@@ -66,4 +66,11 @@ public class SubscriptionController {
         subscriptionService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/delete")
+    @PostAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> delete(@RequestBody SubscriptionRequest subscriptionRequest) {
+        subscriptionService.delete(subscriptionRequest.getText());
+        return ResponseEntity.noContent().build();
+    }
 }
