@@ -1,5 +1,7 @@
 package ru.kirill.restapi.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,9 @@ import ru.kirill.restapi.service.MemberService;
 import ru.kirill.restapi.util.JwtUtil;
 
 @RestController
-@RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@RequestMapping("/api/auth")
+@Tag(name="Authentication service")
 public class AuthController {
 
     private final AuthService authService;
@@ -25,6 +28,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
+    @Operation(summary = "Sign in")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest authRequest) {
         JwtResponse token = authService.login(authRequest);
         return ResponseEntity
@@ -34,12 +38,14 @@ public class AuthController {
     }
 
     @PostMapping("/join")
+    @Operation(summary = "Sign up")
     public ResponseEntity<JwtResponse> join(@RequestBody @Valid JwtRequest jwtRequest) {
         memberService.create(JwtUtil.mapToMemberRequest(jwtRequest));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/member")
+    @Operation(summary = "Get member from JWT token")
     public ResponseEntity<MemberResponse> getMemberFromToken(HttpServletRequest request) {
         String token = jwtTokenProvider.getAccessTokenFromCookies(request);
         return token != null
