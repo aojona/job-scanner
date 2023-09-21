@@ -11,3 +11,11 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}"
     implementation "org.springdoc:springdoc-openapi-starter-common:${versions.springdoc}"
 }
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
