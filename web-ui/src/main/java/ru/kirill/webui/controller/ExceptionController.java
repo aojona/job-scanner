@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.kirill.webui.WebUiApplication;
 import ru.kirill.webui.mapper.FeignExceptionMapper;
 import ru.kirill.webui.util.CookieProvider;
 
@@ -26,6 +27,9 @@ public class ExceptionController {
 
     @ExceptionHandler
     public String handle(FeignException e, HttpServletRequest request, RedirectAttributes attributes, HttpServletResponse response) {
+        if (e.status() == 503) {
+            WebUiApplication.close();
+        }
         if (e.contentUTF8().isBlank()) {
             String message = e.status() == 401
                     ? LOGIN_ERROR_MESSAGE
