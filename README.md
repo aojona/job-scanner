@@ -71,7 +71,3 @@ The main aim of the project is to make it easier for applicants to get a job via
 11) `config-server`
 
 * provides distributed configuration across multiple microservices
-
-12) `gateway-service`
-
-* uses routes to process requests to downstream services
