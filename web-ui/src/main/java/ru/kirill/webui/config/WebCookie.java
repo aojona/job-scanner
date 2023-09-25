@@ -4,9 +4,9 @@ import jakarta.servlet.http.Cookie;
 
 public class WebCookie extends Cookie {
 
-    public WebCookie(String name, String value, String path, int expiry) {
-        super(name, value);
+    public WebCookie(String name, String path) {
+        super(name, null);
         this.setPath(path);
-        this.setMaxAge(expiry);
+        this.setMaxAge(0);
     }
 }

@@ -10,15 +10,7 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-
-cookie:
-  remove-access-token:
-    name: access_token
-    value: null
-    path: /
-    expry: 0
-
-page:
-  request:
-    pageNumber: 0
-    pageSize: 3
+  config:
+    import: optional:configserver:http://${CONFIG_HOST:localhost}:8888
+  profiles:
+    active: dev
