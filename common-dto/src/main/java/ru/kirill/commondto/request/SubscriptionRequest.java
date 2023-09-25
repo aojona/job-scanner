@@ -12,7 +12,4 @@ public class SubscriptionRequest {
     @Size(min = 4, message = "{error.subscription.short}")
     @Size(max = 32, message = "{error.subscription.long}")
     private String text;
-
-    @Schema(description = "member id", example = "1")
-    private Long memberId;
 }
