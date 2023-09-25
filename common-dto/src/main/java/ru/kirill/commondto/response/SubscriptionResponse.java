@@ -5,12 +5,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(description = "Подписка")
+@Schema(description = "Subscription")
 public class SubscriptionResponse {
 
-    @Schema(description = "Профессия", example = "Java разработчик")
+    @Schema(description = "Query", example = "Java developer")
     private String text;
 
-    @Schema(description = "id пользователя", example = "1")
+    @Schema(description = "Member id", example = "1")
     private List<Long> memberIds;
 }

@@ -4,12 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "Страница")
+@Schema(description = "Page")
 public class PageableRequest {
 
-    @Schema(description = "Номер", example = "0")
+    @Schema(description = "Number", example = "0")
     private final int pageNumber;
 
-    @Schema(description = "Число элементов на странице", example = "1")
+    @Schema(description = "Elements number on one page", example = "1")
     private final int pageSize;
 }

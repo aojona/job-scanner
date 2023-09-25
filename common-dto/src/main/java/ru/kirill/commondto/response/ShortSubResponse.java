@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Подписка")
+@Schema(description = "Subscription data")
 public class ShortSubResponse {
 
-    @Schema(description = "Профессия", example = "Java разработчик")
+    @Schema(description = "Query", example = "Java developer")
     private String text;
 }

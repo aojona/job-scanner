@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Сущность пользователя")
+@Schema(description = "Member")
 public class MemberRequest {
 
     @Size(min = 4, message = "{error.username.short}")
     @Size(max = 32, message = "{error.username.long}")
-    @Schema(description = "Уникальное имя пользователя", example = "JohnWick")
+    @Schema(description = "Username", example = "JohnWick")
     private String username;
 
     @Size(max = 32, message = "{error.password.long}")
     @Pattern(regexp = "^.*\\d+.*$", message = "{error.password.digit}")
-    @Schema(description = "Пароль", example = "BabaYaga1964")
+    @Schema(description = "Password", example = "BabaYaga1964")
     private String rawPassword;
 }

@@ -6,13 +6,13 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(description = "Сущность пользователя")
+@Schema(description = "Member")
 public class MemberResponse {
 
-    @Schema(description = "Уникальное имя пользователя", example = "JohnWick")
+    @Schema(description = "Username", example = "JohnWick")
     private String username;
 
-    @Schema(description = "Роль пользователя", example = "USER")
+    @Schema(description = "Role", example = "USER")
     private String role;
 
     @Schema(description = "Telegram chat id")

@@ -10,13 +10,13 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@Schema(description = "Страница с контентом")
+@Schema(description = "Page with content")
 public class PageResponse<D> {
 
-    @Schema(description = "Данные")
+    @Schema(description = "Data")
     private List<D> content;
 
-    @Schema(description = "Информация о странице с контентом")
+    @Schema(description = "Metadata")
     private Metadata metadata;
     public static <D> PageResponse<D> of(Slice<D> slice) {
         return new PageResponse<>(slice.getContent(), getMetadata(slice));
@@ -24,17 +24,19 @@ public class PageResponse<D> {
 
     @Data
     @Builder
-    @Schema(description = "Информация контенте")
+    @Schema(description = "Metadata")
     private static class Metadata {
 
-        @Schema(description = "Номер страницы", example = "0")
+        @Schema(description = "Page number", example = "0")
         private int number;
 
-        @Schema(description = "Размер страницы", example = "1")
+        @Schema(description = "Elements number on one page", example = "1")
         private int size;
 
+        @Schema(description = "False if the first page, otherwise - true")
         private boolean hasPrevious;
 
+        @Schema(description = "False if the last page, otherwise - true")
         private boolean hasNext;
     }
 

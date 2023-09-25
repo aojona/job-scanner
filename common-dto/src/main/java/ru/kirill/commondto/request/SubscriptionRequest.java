@@ -5,14 +5,14 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-@Schema(description = "Подписка")
+@Schema(description = "Subscription")
 public class SubscriptionRequest {
 
-    @Schema(description = "Профессия", example = "Java разработчик")
+    @Schema(description = "Query", example = "Java developer")
     @Size(min = 4, message = "{error.subscription.short}")
     @Size(max = 32, message = "{error.subscription.long}")
     private String text;
 
-    @Schema(description = "id пользователя", example = "1")
+    @Schema(description = "member id", example = "1")
     private Long memberId;
 }
