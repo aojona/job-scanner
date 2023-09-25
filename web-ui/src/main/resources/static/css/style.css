@@ -48,12 +48,12 @@ input {
     background-color: rgba(255,255,255,0.07);
     border-radius: 3px;
     padding: 0 10px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 300;
 }
 
 .hero input:hover {
-    outline: 2px dotted var(--light-purple-color);
+    outline: 2px solid var(--light-purple-color);
 }
 
 button {
@@ -89,11 +89,13 @@ button {
 }
 
 img {
-    background-color: var(--white-color);
+    vertical-align: middle;
+    background: url(palette/white-background-color.svg);
 }
 
+
 img:hover {
-    background-color: white;
+    background: url(palette/clear-background-color.svg);
 }
 
 .header h1 {
@@ -101,8 +103,8 @@ img:hover {
     height: 20px;
 }
 
-#error {
-    color: var(--red-color);
+h4 {
+    font-weight: normal;
 }
 
 .hero #error {
@@ -125,31 +127,74 @@ header {
     height: 90px;
 }
 
-.menu {
+nav, nav * {
     margin-top: 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    padding: 0 20px;
-    list-style: none;
 }
 
-.menu * {
-    margin-top: 16px;
+nav ul {
+    float: right;
+    margin-right: 10px;
 }
 
-.menu a {
-    font-weight: bold;
+nav ul li {
+    display: inline-block;
+    line-height: 50px;
+    margin: 0 10px;
+}
+
+nav ul li a {
     text-decoration: none;
 }
 
-.menu a:hover {
+nav ul li a:hover {
     color: white;
 }
 
-.menu a:active {
-    color: var(--white-color);
+#hamburger-icon {
+    margin: auto 0;
+    display: none;
+    cursor: pointer;
+}
+
+
+#hamburger-icon div {
+    width: 35px;
+    height: 3px;
+    background-color: var(--white-color);
+    margin: 6px 20px;
+    transition: 0.4s;
+}
+
+.open .bar1 {
+    transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.open .bar2 {
+    opacity: 0;
+}
+
+.open .bar3 {
+    transform: rotate(45deg) translate(-6px, -7px);
+}
+
+.open .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    height: calc(100vh - 50px);
+    width: 100%;
+}
+
+.mobile-menu li {
+    margin-bottom: 10px;
 }
 
 .header_logo {
@@ -162,7 +207,7 @@ section * {
 }
 
 .container {
-    width: 85%;
+    width: 90%;
     margin-right: auto;
     margin-left: auto;
     max-width: 1000px;
@@ -175,7 +220,7 @@ section * {
 }
 
 .container input {
-    width: 310px;
+    width: 250px;
     margin-top: 0;
     color: var(--purple-color);
     background-color: var(--white-color);
@@ -217,6 +262,7 @@ section * {
 header a {
     margin-top: 0;
 }
+
 header a img {
     height: 50px;
 }
@@ -260,7 +306,6 @@ input::-webkit-inner-spin-button {
     margin-top: 25px;
 }
 
-
 .pageSelect a {
     font-size: 15px;
     margin-right: 56px;
@@ -279,4 +324,76 @@ input::-webkit-inner-spin-button {
 
 .rightArrow {
     display: inline-block;
+}
+
+.charts * {
+    margin-top: 0;
+}
+
+#memberCharts * {
+    margin-left: -60px;
+}
+
+#mainCharts * {
+    margin-left: -100px;
+}
+
+#memberVacancyStatistics {
+    margin-top: 35px;
+}
+
+#averageSalaryRangeChart {
+    margin-top: -10px;
+}
+
+.guideImage img {
+    width: 100%;
+    max-width: 500px;
+    margin-left: -60px;
+}
+
+body {
+    margin-top: 0;
+}
+#error, .highlight {
+    color: var(--red-color);
+}
+
+
+@media only screen and (max-width: 700px) {
+
+    header nav {
+        display: none;
+    }
+
+    #hamburger-icon {
+        display: block;
+    }
+
+    ul {
+        margin-top: 0;
+        background-color: var(--purple-color);
+        list-style: none;
+    }
+
+    li {
+        margin-top: 60px;
+        font-size: 20px;
+        margin-left: -30px;
+    }
+
+    li a {
+        text-decoration: none;
+    }
+
+    li a:hover {
+        color: white;
+    }
+
+}
+
+@media only screen and (max-width: 500px) {
+    .container .deleteForm {
+        margin-left: 10px;
+    }
 }

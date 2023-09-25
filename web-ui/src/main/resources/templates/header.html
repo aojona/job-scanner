@@ -2,22 +2,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Header</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
     <header th:fragment="copy (isAuthenticated, isAdmin, username)">
         <a href="/">
             <img src="/logo_header.svg" alt="logo" class="header_logo"/>
         </a>
-        <ul class="menu">
-            <li th:if = "!${isAuthenticated}"><a href="/auth/join">JOIN</a></li>
-            <li th:if = "!${isAuthenticated}"><a href="/auth/login">LOGIN</a></li>
-            <li th:if = "${isAuthenticated}"><a href="/member" th:text="${username}">PROFILE</a></li>
-            <li th:if = "${isAdmin}"><a href="/admin">CONTROL</a></li>
-            <li th:if = "${isAuthenticated}"><a href="/auth/logout">LOGOUT</a></li>
-        </ul>
+        <nav>
+            <ul>
+                <li th:if = "!${isAuthenticated}"><a href="/auth/join">JOIN</a></li>
+                <li th:if = "!${isAuthenticated}"><a href="/auth/login">LOGIN</a></li>
+                <li th:if = "${isAuthenticated}"><a href="/member" th:text="${username}">PROFILE</a></li>
+                <li th:if = "${isAdmin}"><a href="/admin">CONTROL</a></li>
+                <li><a href="/guide">GUIDE</a></li>
+                <li th:if = "${isAuthenticated}"><a href="/auth/logout">LOGOUT</a></li>
+            </ul>
+        </nav>
+        <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+            <ul class="mobile-menu">
+                <li th:if = "!${isAuthenticated}"><a href="/auth/join">JOIN</a></li>
+                <li th:if = "!${isAuthenticated}"><a href="/auth/login">LOGIN</a></li>
+                <li th:if = "${isAuthenticated}"><a href="/member" th:text="${username}">PROFILE</a></li>
+                <li th:if = "${isAdmin}"><a href="/admin">CONTROL</a></li>
+                <li><a href="/guide">GUIDE</a></li>
+                <li th:if = "${isAuthenticated}"><a href="/auth/logout">LOGOUT</a></li>
+            </ul>
+        </div>
+        <script src="/javascript/mobileMenu.js"></script>
     </header>
 </body>
 </html>
