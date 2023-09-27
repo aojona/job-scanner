@@ -1,6 +1,7 @@
 package ru.kirill.webui.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,13 @@ public class MemberController {
     private static final String SUBSCRIPTION = "subscription";
     private static final String CHAT_ID = "chat";
     private static final String STATISTICS = "statistics";
+    private static final String LIMIT = "subscriptionsLimit";
 
     private final RestApiClient restApiClient;
     private final AttributesProvider attributesProvider;
+
+    @Value("${subscriptions.limit}")
+    private int subscriptionsLimit;
 
     @GetMapping
     public String memberView(Model model) {
@@ -31,6 +36,7 @@ public class MemberController {
         model.addAttribute(STATISTICS, statistics);
         model.addAttribute(SUBSCRIPTION, new SubscriptionRequest());
         model.addAttribute(CHAT_ID, new ChatRequest());
+        model.addAttribute(LIMIT, subscriptionsLimit);
         return "member";
     }
 
