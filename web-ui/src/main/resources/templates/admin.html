@@ -13,10 +13,10 @@
     <section>
         <div class = "container">
             <h3 class="mainHeader">Members</h3>
-            <div th:each="user : ${member_page.content}">
+            <div th:each="user : ${member_page.content}" class="deleteForm">
                 <form th:action="@{/admin/deleteMember}" th:method="delete" th:object="${user}">
                     <input type="hidden" name="username" th:value="*{username}" th:text="*{username}"/>
-                    <button type="submit" class="deleteButton">+</button>
+                    <button type="submit" class="deleteButton">&#x00d7;</button>
                 </form>
             </div>
             <div class="pageSelect">
@@ -30,10 +30,10 @@
             <p id="error" th:if="${param.error}" th:text="${param.error}">error</p>
             <br>
             <h3 class="mainHeader">Subscriptions</h3>
-            <div th:each="subscription : ${subscription_page.content}">
+            <div th:each="subscription : ${subscription_page.content}" class="deleteForm">
                 <form th:action="@{/admin/deleteSubscription}" th:method="delete" th:object="${subscription}">
                     <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
-                    <button type="submit" class="deleteButton">+</button>
+                    <button type="submit" class="deleteButton">&#x00d7;</button>
                 </form>
             </div>
             <div class="pageSelect">
@@ -46,5 +46,6 @@
             </div>
         </div>
     </section>
+    <footer th:replace="~{footer :: footer}"></footer>
 </body>
 </html>

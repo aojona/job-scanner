@@ -1,9 +1,11 @@
 :root {
-    --purple-color: #3c4fe0;
-    --white-color: #d6d7f5;
-    --red-color: #e03d7b;
+    --purple-color: #3f54e0;
+    --dark-color: #2334b8;
+    --white-color: #e9e9f2;
+    --grey-color: #d8d8e6;
+    --red-color: #d12a67;
     --light-purple-color: #949cfa;
-    --pink-color: #e03d7b;
+    --bright-red-color: #ff0064;
 }
 
 * {
@@ -12,6 +14,7 @@
 
 body {
     background-color: var(--white-color);
+    padding-bottom: 50px;
     margin: 0;
 }
 
@@ -24,6 +27,10 @@ body * {
     letter-spacing: 0.1em;
 }
 
+canvas {
+    letter-spacing: 0;
+}
+
 .hero {
     height: 445px;
     width: 350px;
@@ -34,7 +41,7 @@ body * {
     left: 50%;
     border-radius: 10px;
     padding: 0 35px;
-    box-shadow: 0 0 3px var(--purple-color);
+    box-shadow: 0 0 3px var(--dark-color);
     text-align: center;
 }
 
@@ -61,7 +68,6 @@ button {
 }
 
 .heroButton {
-    /*margin-top: 40px;*/
     width: 100%;
     height: 50px;
     background-color: var(--white-color);
@@ -72,13 +78,12 @@ button {
 }
 
 .heroButton:hover {
-    background-color: #eff0fd;
+    background-color: white;
 }
 
 
 .heroButton:active {
     color: var(--white-color);
-    outline: 2px dotted var(--purple-color);
     transition:0.1s;
 }
 
@@ -115,9 +120,8 @@ h4 {
 header {
     margin-top: 0;
     width: 100%;
-    height: 50px;
+    height: 45px;
     background: var(--purple-color);
-    box-shadow: 0 0 3px var(--purple-color);
     display: flex;
     justify-content: space-between;
 }
@@ -138,7 +142,7 @@ nav ul {
 
 nav ul li {
     display: inline-block;
-    line-height: 50px;
+    line-height: 45px;
     margin: 0 10px;
 }
 
@@ -187,14 +191,14 @@ nav ul li a:hover {
 .mobile-menu {
     display: none;
     position: absolute;
-    top: 50px;
+    top: 45px;
     left: 0;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 45px);
     width: 100%;
 }
 
 .mobile-menu li {
-    margin-bottom: 10px;
+    margin-top: 90px;
 }
 
 .header_logo {
@@ -214,7 +218,7 @@ section * {
 }
 
 .container * {
-    color: var(--purple-color);
+    color: var(--dark-color);
     margin-top: 10px;
     text-align: center;
 }
@@ -222,9 +226,9 @@ section * {
 .container input {
     width: 250px;
     margin-top: 0;
-    color: var(--purple-color);
+    color: var(--dark-color);
     background-color: var(--white-color);
-    border-bottom: 2px solid var(--purple-color);
+    border-bottom: 2px solid var(--dark-color);
 }
 
 .container input:hover {
@@ -244,7 +248,7 @@ section * {
 
 .container ::placeholder {
     text-align: center;
-    color: var(--purple-color);
+    color: var(--dark-color);
 }
 
 .container button:hover {
@@ -264,18 +268,17 @@ header a {
 }
 
 header a img {
-    height: 50px;
+    height: 45px;
 }
 
 .deleteButton {
     padding: 0 20px;
     margin-right: 0;
-    transform: rotate(45deg);
     text-align: right;
 }
 
 .deleteButton:active {
-    transform: scale(1.4) rotate(45deg);
+    transform: scale(1.4);
 }
 
 input::-webkit-outer-spin-button,
@@ -289,8 +292,12 @@ input::-webkit-inner-spin-button {
     color: var(--red-color);
 }
 
+.developerLink:hover {
+    color: var(--red-color);
+}
+
 .botLink:hover {
-    color: #ff0064;
+    color: var(--bright-red-color);
 }
 
 .container input, .container div {
@@ -326,12 +333,17 @@ input::-webkit-inner-spin-button {
     display: inline-block;
 }
 
+canvas {
+    max-height: 600px;
+}
+
 .charts * {
     margin-top: 0;
 }
 
 #memberCharts * {
-    margin-left: -60px;
+    margin-left: -90px;
+    margin-right: -20px;
 }
 
 #mainCharts * {
@@ -348,13 +360,14 @@ input::-webkit-inner-spin-button {
 
 .guideImage img {
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     margin-left: -60px;
 }
 
 body {
     margin-top: 0;
 }
+
 #error, .highlight {
     color: var(--red-color);
 }
@@ -396,4 +409,20 @@ body {
     .container .deleteForm {
         margin-left: 10px;
     }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: var(--grey-color);
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer * {
+    margin-top: 8px;
+    font-weight: normal;
+    color: var(--dark-color);
 }

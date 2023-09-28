@@ -26,10 +26,10 @@
             <div th:each="subscription : ${member.subscriptions}" class="deleteForm">
                 <form th:action="@{/member/removeSubscription}" th:method="delete" th:object="${subscription}">
                     <input type="hidden" name="text" th:value="*{text}" th:text="*{text}"/>
-                    <button type="submit" class="deleteButton">+</button>
+                    <button type="submit" class="deleteButton">&#x00d7;</button>
                 </form>
             </div>
-            <form th:if ="${member.subscriptions.size() < 3}" th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
+            <form th:if ="${member.subscriptions.size() < subscriptionsLimit}" th:action="@{/member/addSubscription}" method="post" th:object="${subscription}">
                 <label for="subscription"></label>
                 <input id="subscription" type="text" name="subscription" th:field="*{text}" placeholder="add subscription"/>
                 <span class="rightContent">
@@ -72,5 +72,6 @@
         </script>
         <script src="/javascript/memberCharts.js"></script>
     </div>
+    <footer th:replace="~{footer :: footer}"></footer>
 </body>
 </html>
