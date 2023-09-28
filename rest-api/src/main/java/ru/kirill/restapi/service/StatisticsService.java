@@ -33,9 +33,9 @@ public class StatisticsService {
     public List<AverageVacancyStatistics> getStatisticsForRandomSubscriptions() {
         return statisticsRepository
                 .findAverageStatisticsWhereQueryIn(subscriptionRepository
-                        .findRandomSubscriptions(PageRequest.of(
-                                searchProperties.page(),
-                                searchProperties.size()
+                        .findRandomSubscriptions(
+                                searchProperties.maxSubscriptionLength(),
+                                PageRequest.of(searchProperties.page(), searchProperties.size()
                         ))
                         .stream()
                         .map(Subscription::getText)
