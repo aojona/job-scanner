@@ -25,7 +25,7 @@ public class VacancyConsumer {
                     Notification notification = notificationService.createNotification(
                             chatId,
                             vacancyResponse.getVacancy(),
-                            vacancyResponse.getQueryText()
+                            vacancyResponse.getQueryText().replaceAll(" ", " #")
                     );
                     template.convertAndSend(notification);
                 });
