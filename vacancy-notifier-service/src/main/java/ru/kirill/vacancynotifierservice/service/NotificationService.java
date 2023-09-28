@@ -45,7 +45,7 @@ public class NotificationService {
                 .peek(field -> field.setAccessible(true))
                 .filter(field -> getFieldValue(v, field) != null)
                 .forEach(field -> {
-                    if (field.getType().getClassLoader() == ClassLoader.getSystemClassLoader()) {
+                    if (field.getType().getClassLoader() != null) {
                         appendMessages(text, getFieldValue(v, field) , code + "." + field.getName(), field.getType());
                     } else {
                         appendMessageIfNotBlank(text, getMessageForFieldValue(v, field, code));
