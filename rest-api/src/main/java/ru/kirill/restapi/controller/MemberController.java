@@ -18,6 +18,7 @@ import ru.kirill.commondto.response.MemberResponse;
 import ru.kirill.commondto.response.PageResponse;
 import ru.kirill.restapi.security.JwtAuthentication;
 import ru.kirill.restapi.service.MemberService;
+import ru.kirill.restapi.service.SubscriptionService;
 
 @CrossOrigin
 @RestController
@@ -28,6 +29,7 @@ import ru.kirill.restapi.service.MemberService;
 public class MemberController {
 
     private final MemberService memberService;
+    private final SubscriptionService subscriptionService;
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -87,6 +89,7 @@ public class MemberController {
     @Operation(summary = "Remove subscription from authenticated member via api/auth")
     public ResponseEntity<?> removeSubscription(JwtAuthentication authentication, @RequestBody @Valid SubscriptionRequest subscriptionRequest) {
         memberService.removeSubscription(authentication.getPrincipal().getId(), subscriptionRequest.getText());
+        subscriptionService.deleteSubscriptionIfWithoutMembers(subscriptionRequest.getText());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
