@@ -19,7 +19,8 @@ public class RequestTask implements Serializable {
     public static class QueryParams {
 
         private String text;
-        private Integer perPage;
+        private int perPage;
+        private int page;
         private String orderBy;
     }
 }
