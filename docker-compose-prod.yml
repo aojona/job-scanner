@@ -1,0 +1,160 @@
+version: "3.4"
+
+services:
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.12-management-alpine
+    restart: always
+    volumes:
+      - ./init/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./init/rabbit-definitions.json:/etc/rabbitmq/rabbit-definitions.json:ro
+    ports:
+      - "15672:15672"
+
+  redis:
+    container_name: redis
+    image: redis:7.0.12-alpine
+    command: sh -c "redis-server --requirepass $${REDIS_PASSWORD}"
+    restart: always
+    environment:
+      REDIS_PASSWORD: pass
+
+  postgres:
+    container_name: postgres
+    image: postgres:15.3-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+
+  config-server:
+    container_name: config-server
+    image: aojona/job-scanner-config-server:latest
+    restart: always
+
+  job-server:
+    container_name: job-server
+    image: aojona/job-scanner-job-server:latest
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8761 || exit 1
+      retries: 10
+    restart: always
+    ports:
+      - "8761:8761"
+
+  analytic-service:
+    container_name: analytic-service
+    image: aojona/job-scanner-analytic-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, redis-prod, postgresql-prod, rabbitmq-prod
+
+  rate-limiter-service:
+    container_name: rate-limiter-service
+    image: aojona/job-scanner-rate-limiter-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, prod
+
+  rest-api:
+    container_name: rest-api
+    image: aojona/job-scanner-rest-api:latest
+    ports:
+      - "8082:8082"
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, prod, postgresql-prod
+
+  scheduler-service:
+    container_name: scheduler-service
+    image: aojona/job-scanner-scheduler-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, prod, postgresql-prod, rabbitmq-prod
+
+  telegram-service:
+    container_name: telegram-service
+    image: aojona/job-scanner-telegram-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, rabbitmq-prod
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_NAME: ${BOT_NAME}
+
+  vacancy-notifier-service:
+    container_name: vacancy-notifier-service
+    image: aojona/job-scanner-vacancy-notifier-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, rabbitmq-prod
+
+  vacancy-scan-service:
+    container_name: vacancy-scan-service
+    image: aojona/job-scanner-vacancy-scan-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, rabbitmq-prod
+
+  vacancy-storage-service:
+    container_name: vacancy-storage-service
+    image: aojona/job-scanner-vacancy-storage-service:latest
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, prod, redis-prod, rabbitmq-prod
+
+  web-ui:
+    container_name: web-ui
+    image: aojona/job-scanner-web-ui:latest
+    ports:
+      - "80:8081"
+    restart: always
+    depends_on:
+      job-server:
+        condition: service_healthy
+    environment:
+      CONFIG_HOST: config-server
+      SPRING_PROFILES_ACTIVE: eureka-client, prod
