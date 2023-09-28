@@ -62,4 +62,9 @@ public class StatisticsService {
                                 .toList()
                 ));
     }
+
+    @Transactional
+    public void delete(String query) {
+        statisticsRepository.deleteAllByQuery(query);
+    }
 }

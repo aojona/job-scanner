@@ -25,4 +25,5 @@ public interface StatisticsRepository extends JpaRepository<VacancyStatistics, L
     List<AverageVacancyStatistics> findAverageStatisticsWhereQueryIn(List<String> queries);
     List<VacancyStatistics> findByQueryAndDateAfterOrderByDateDesc(String query, LocalDate date);
 
+    void deleteAllByQuery(String query);
 }

@@ -14,6 +14,7 @@ import ru.kirill.commondto.request.PageableRequest;
 import ru.kirill.commondto.request.SubscriptionRequest;
 import ru.kirill.commondto.response.PageResponse;
 import ru.kirill.commondto.response.SubscriptionResponse;
+import ru.kirill.restapi.service.StatisticsService;
 import ru.kirill.restapi.service.SubscriptionService;
 
 @CrossOrigin
@@ -25,6 +26,7 @@ import ru.kirill.restapi.service.SubscriptionService;
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
+    private final StatisticsService statisticsService;
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -72,6 +74,7 @@ public class SubscriptionController {
     @Operation(summary = "Delete subscription by text")
     public ResponseEntity<?> delete(@RequestBody SubscriptionRequest subscriptionRequest) {
         subscriptionService.delete(subscriptionRequest.getText());
+        statisticsService.delete(subscriptionRequest.getText());
         return ResponseEntity.noContent().build();
     }
 }
