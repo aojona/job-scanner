@@ -14,6 +14,7 @@ public class VacancyAnalyzer {
     private double averageMaxSalary;
     private int numberOfVacancies;
     private int numberOfVacanciesWithSalary;
+    private String AVAILABLE_CURRENCY = "RUR";
 
     public VacancyAnalyzer(String query, LocalDate date) {
         this.query = query;
@@ -24,8 +25,10 @@ public class VacancyAnalyzer {
         numberOfVacancies++;
         if (salary != null) {
             numberOfVacanciesWithSalary++;
-            averageMinSalary = calculateAvgSalary(averageMinSalary, salary.getFrom());
-            averageMaxSalary = calculateAvgSalary(averageMaxSalary, salary.getTo());
+            if (salary.getCurrency().equals(AVAILABLE_CURRENCY)) {
+                averageMinSalary = calculateAvgSalary(averageMinSalary, salary.getFrom());
+                averageMaxSalary = calculateAvgSalary(averageMaxSalary, salary.getTo());
+            }
         }
     }
 
