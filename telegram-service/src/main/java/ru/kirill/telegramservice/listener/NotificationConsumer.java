@@ -41,8 +41,7 @@ public class NotificationConsumer {
         if (accessResponse.isAccess()) {
             try {
                 telegramBot.sendNotification(notification);
-            } catch (TelegramApiException e) {
-                log.error("Sending message exception for chat id = " + notification.getChatId());
+            } catch (TelegramApiException ignored) {
             }
         } else {
             ScheduledFuture<AccessResponse> scheduledTask = createScheduledTask(accessResponse);
