@@ -25,4 +25,10 @@ public class HomeController {
         model.addAttribute(STATISTICS, statistics);
         return "index";
     }
+
+    @GetMapping("/guide")
+    public String guideView(Model model) {
+        attributesProvider.addDefaultMemberAttributes(model);
+        return "guide";
+    }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guide View</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+<header th:insert="~{header :: copy (isAuthenticated=${isAuthenticated}, isAdmin=${isAdmin}, username=${member.username})}"></header>
+    <section>
+        <div class = "container">
+            <h3 class="mainHeader">Guide</h3>
+            <p>
+                1. Job Scanner provides statistics on the number of new vacancies and average salary range
+            </p>
+            <div class="guideImage">
+                <img src="/guide/guide-1.png" alt="guide-1"/>
+            </div>
+            <br>
+            <p>
+                2. Based on members' subscriptions our service collects and analyzes vacancy data,
+                represents its graphically, as well as sends job alerts via Telegram bot.
+            </p>
+            <div class="guideImage">
+                <img src="/guide/guide-2.png" alt="guide-2" class="guideImage"/>
+            </div>
+            <br>
+            <p>
+                Job Scanner also narrows the search to a specific city mentioned in the subscription
+            </p>
+            <div class="guideImage">
+                <img src="/guide/guide-2.1.png" alt="guide-2.1" class="guideImage"/>
+            </div>
+            <br>
+            <p>
+                3. To get notifications via Telegram, contact
+                <a href="https://t.me/job_scanner_bot" class="botLink">@job_scanner_bot</a>
+            </p>
+            <div class="guideImage">
+                <img src="/guide/guide-3.png" alt="guide-3" class="guideImage"/>
+            </div>
+            <br>
+            <p>
+                and paste received <span class = "highlight">chat id</span> into the corresponding field on the profile page
+            </p>
+            <div class="guideImage">
+                <img src="/guide/guide-3.1.png" alt="guide-3.1" class="guideImage"/>
+            </div>
+            <br>
+            <p>
+                4. Enjoy receiving notifications when something interesting pops up
+            </p>
+            <div class="guideImage">
+                <img src="/guide/guide-4.png" alt="guide-4" class="guideImage"/>
+            </div>
+            <br>
+            <p th:if = "${!isAuthenticated}">
+                <a class="highlight" href="/auth/join">Join</a> to become our member
+            </p>
+        </div>
+    </section>
+<footer th:replace="~{footer :: footer}"></footer>
+</body>
+</html>
