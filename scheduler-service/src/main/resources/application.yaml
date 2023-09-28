@@ -5,22 +5,14 @@ spring:
   application:
     name: scheduler-service
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://${CONFIG_HOST:localhost}:8888
   profiles:
     active:
     - postgresql
     - rabbitmq
+    - dev
 
 rabbitmq:
   exchange: direct-exchange
   vacancy-scan-key: scheduled-key
   analytics-key: vacancy-analytics-key
-
-scheduler:
-  fixed-rate: 30
-  batch-size: 1000
-
-request-task:
-  custom-query-params:
-    per-page: 10
-    order-by: publication_time

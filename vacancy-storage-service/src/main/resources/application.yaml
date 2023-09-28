@@ -5,24 +5,14 @@ spring:
   application:
     name: vacancy-storage-service
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://${CONFIG_HOST:localhost}:8888
   profiles:
     active:
     - rabbitmq
     - redis
-  cache:
-    redis:
-      time-to-live: 3d      # expiration time in cache, supported units: ns, us, ms, s, m, h, d
-
-redis:
-  time: 30                  # expiration time in db: must be more 0
-  time-unit: days           # unit of expiration time: milliseconds, seconds, minutes, hours or days
+    - dev
 
 rabbitmq:
   exchange: direct-exchange
   routing-key: create-notify-key
   listen-queue: vacancy-save-queue
-
-vacancy:
-  novelty-time: 24
-  unit: hours
