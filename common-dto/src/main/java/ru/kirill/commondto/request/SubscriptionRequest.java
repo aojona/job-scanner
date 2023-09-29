@@ -9,7 +9,7 @@ import lombok.Data;
 public class SubscriptionRequest {
 
     @Schema(description = "Query", example = "Java developer")
-    @Size(min = 4, message = "{error.subscription.short}")
+    @Size(min = 3, message = "{error.subscription.short}")
     @Size(max = 32, message = "{error.subscription.long}")
     private String text;
 
