@@ -9,8 +9,6 @@ services:
     volumes:
       - ./init/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
       - ./init/rabbit-definitions.json:/etc/rabbitmq/rabbit-definitions.json:ro
-    ports:
-      - "15672:15672"
 
   redis:
     container_name: redis
