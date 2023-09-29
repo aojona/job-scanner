@@ -66,8 +66,8 @@ for (i = 1; i < allDate.length; i++) {
     }
 }
 
-var colors = ["#ff0062", "#003dff", "#ff8000", "#f002ff"]
-var backgroundColor = ["rgba(255,0,98,0.05)", "rgba(0,61,255,0.05)", "rgba(255,128,0,0.1)", "rgba(240,2,255,0.1)"]
+var colors = ["#ff2679", "#2659ff", "#f57a00", "#0086d9"]
+var backgroundColor = ["rgba(255,38,121,0.03)", "rgba(38,89,255,0.03)", "rgba(245,122,0,0.03)", "rgba(0,134,217,0.03)"]
 
 var datasets = []
 for (i = 0; i < query.length; i++) {

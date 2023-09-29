@@ -1,10 +1,10 @@
 :root {
-    --purple-color: #3f54e0;
+    --purple-color: #374ede;
     --dark-color: #2637bd;
     --white-color: #e9e9f2;
-    --grey-color: #d8d8e6;
+    --grey-color: #dfdfeb;
     --red-color: #d12a67;
-    --light-purple-color: #949cfa;
+    --light-purple-color: #9ca3fc;
     --bright-red-color: #ff0064;
 }
 
@@ -32,7 +32,7 @@ canvas {
 }
 
 .hero {
-    height: 445px;
+    height: 440px;
     width: 350px;
     background-color: var(--purple-color);
     position: absolute;
