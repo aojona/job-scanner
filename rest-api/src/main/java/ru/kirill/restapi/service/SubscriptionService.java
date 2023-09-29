@@ -11,7 +11,6 @@ import ru.kirill.commondto.response.SubscriptionResponse;
 import ru.kirill.restapi.entity.Subscription;
 import ru.kirill.restapi.exception.SubscriptionNotFoundException;
 import ru.kirill.restapi.mapper.SubscriptionConverter;
-import ru.kirill.restapi.repository.StatisticsRepository;
 import ru.kirill.restapi.repository.SubscriptionRepository;
 import java.util.Optional;
 
@@ -22,7 +21,6 @@ public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
     private final SubscriptionConverter subscriptionConverter;
-    private final StatisticsRepository statisticsRepository;
 
     public SubscriptionResponse get(long id) {
         return subscriptionRepository
@@ -83,7 +81,6 @@ public class SubscriptionService {
                 .orElseThrow();
         if (subscription.getMembers().isEmpty()) {
             subscriptionRepository.delete(subscription);
-            statisticsRepository.deleteAllByQuery(text);
         }
     }
 }
