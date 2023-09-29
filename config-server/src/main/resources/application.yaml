@@ -9,3 +9,5 @@ spring:
       server:
         git:
           uri: https://github.com/aojona-config/job-scanner.git
+          clone-on-start: true
+          basedir: ./${spring.application.name}/src/main/resources/git
